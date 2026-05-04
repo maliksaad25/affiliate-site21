@@ -72,7 +72,7 @@ header {
 
 /* The logo / site name */
 .logo {
-  font-family: 'Syne', georgia;
+  font-family: 'Syne', sans-serif;
   font-size: 1.9rem;
   font-weight: 800;
   color: var(--text);
