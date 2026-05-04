@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!--
+  index.html — The main page of TechNest
+  This file defines the STRUCTURE of the website.
+  The actual products are loaded dynamically from posts.json via script.js.
+  You should NOT need to edit this file to add/remove products.
+-->
+<html lang="en">
+
+<head>
+  <!-- Tells the browser this is UTF-8 encoded (supports all characters) -->
+  <meta charset="UTF-8">
+
+  <!-- Makes the site look good on mobile phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tab title and SEO description -->
+  <title>TechNest — Latest Tech Gadgets</title>
+  <meta name="description" content="Discover the best tech gadgets. Curated picks with honest reviews and the best prices.">
+
+  <!-- Links to our CSS stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ======================================================
+       ANNOUNCEMENT BAR — Scrolling strip above the header
+       Edit the text inside <span> to change the message
+       ====================================================== -->
+  <div class="announce-bar">
+    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; 100% Secure Shopping 🛡️</span>
+  </div>
+
+  <!-- ======================================================
+       HEADER — Sticky top bar with site name
+       ====================================================== -->
+  <header>
+    <div class="header-inner">
+      <!-- Logo: clicking it reloads the page -->
+      <a href="index.html" class="logo">Tech<span>Nest</span></a>
+      <!-- Navigation links — right side of header -->
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="privacy.html" class="nav-link">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       HERO — Big intro section with headline
+       ====================================================== -->
+  <section class="hero">
+    <!-- Small badge above the heading -->
+    <div class="hero-label">✦ Handpicked for You</div>
+
+    <!-- Main headline -->
+    <h1>The Best <span class="highlight">Tech Gadgets</span> Right Now</h1>
+
+    <!-- Subheading description -->
+    <p>Carefully curated picks across audio, wearables, cameras and more — all with the best affiliate deals.</p>
+  </section>
+
+  <!-- ======================================================
+       MAIN CONTENT — Filter controls + product grid
+       ====================================================== -->
+  <main>
+
+    <!-- Controls row: filter buttons + product count -->
+    <div class="controls">
+
+      <!-- Filter buttons are generated here automatically by script.js -->
+      <div class="filter-group" id="filter-group">
+        <!-- Buttons will appear here automatically -->
+      </div>
+
+      <!-- Product count text (e.g. "9 products found") -->
+      <p class="product-count" id="product-count"></p>
+
+    </div>
+
+    <!-- Product Grid: cards are inserted here by script.js -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will appear here automatically -->
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-wrapper">
+      <button id="load-more-btn" class="hidden">Load More Products</button>
+    </div>
+
+  </main>
+
+  <!-- ======================================================
+       FOOTER — Bottom of the page
+       ====================================================== -->
+  <footer>
+    <div class="footer-inner">
+      <!-- Footer logo -->
+      <div class="footer-logo">Tech<span>Nest</span></div>
+
+      <!-- Affiliate disclaimer — important for legal compliance -->
+      <p class="footer-text">
+        As an AliExpress affiliate, we may earn a commission from qualifying purchases.
+        This comes at no extra cost to you and helps keep this site running.
+      </p>
+
+      <!-- Footer navigation links -->
+      <div class="footer-nav">
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+
+      <!-- Copyright notice -->
+      <p class="footer-copy">© 2025 TechNest. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Links to our JavaScript file — placed at the END of body -->
+  <!-- Placing it here ensures the HTML is loaded before the script runs -->
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — TechNest</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="announce-bar">
+    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; 100% Secure Shopping 🛡️</span>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">Tech<span>Nest</span></a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="privacy.html" class="nav-link">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-wrap">
+    <h1 class="page-title">Contact Us</h1>
+    <p class="page-subtitle">Got a question or product suggestion? We'd love to hear from you.</p>
+
+    <div class="page-section">
+      <h2>Send a Message</h2>
+      <p>We typically reply within 24–48 hours.</p>
+      <br>
+      <!--
+        TO MAKE THIS FORM SEND REAL EMAILS (free):
+        1. Go to https://formspree.io and sign up
+        2. Create a new form — copy your Form ID
+        3. Replace YOUR_FORM_ID below with your real ID
+           e.g. action="https://formspree.io/f/xbjwkqra"
+      -->
+      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="e.g. Sarah Khan" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Tech<span>Nest</span></div>
+      <p class="footer-text">As an AliExpress affiliate, we may earn a commission from qualifying purchases at no extra cost to you.</p>
+      <div class="footer-nav">
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+      <p class="footer-copy">© 2025 TechNest. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

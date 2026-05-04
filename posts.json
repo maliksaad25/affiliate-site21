@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "Wireless Bluetooth Earbuds Pro",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=300&fit=crop",
+    "description": "True wireless earbuds with noise cancellation, 30-hour battery, and crystal-clear sound. Perfect for daily use and workouts.",
+    "price": "$18.99",
+    "original_price": "$45.00",
+    "category": "Audio",
+    "badge": "Best Seller",
+    "affiliate_link": "https://www.aliexpress.com/item/YOUR-LINK-HERE.html"
+  },
+  {
+    "id": 2,
+    "title": "Smart Fitness Watch",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop",
+    "description": "Tracks heart rate, steps, sleep, and more. Water-resistant with 7-day battery. Works with Android and iPhone.",
+    "price": "$24.99",
+    "original_price": "$60.00",
+    "category": "Wearables",
+    "badge": "Hot Deal",
+    "affiliate_link": "https://www.aliexpress.com/item/YOUR-LINK-HERE.html"
+  },
+  {
+    "id": 3,
+    "title": "Portable LED Ring Light",
+    "image": "https://images.unsplash.com/photo-1606921231106-f1083329a65c?w=400&h=300&fit=crop",
+    "description": "10-inch ring light with tripod stand and phone holder. 3 color modes, adjustable brightness. Perfect for content creators.",
+    "price": "$15.99",
+    "original_price": "$35.00",
+    "category": "Accessories",
+    "badge": "New",
+    "affiliate_link": "https://www.aliexpress.com/item/YOUR-LINK-HERE.html"
+  }
+]
