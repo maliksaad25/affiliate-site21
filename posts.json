@@ -31,5 +31,16 @@
     "category": "Accessories",
     "badge": "New",
     "affiliate_link": "https://www.aliexpress.com/item/YOUR-LINK-HERE.html"
+  },
+  {
+    "id": 1,
+    "title": "Mini Magnetic Phone Stand",
+    "image": "https://ae01.alicdn.com/PASTE-IMAGE-URL-HERE.jpg",
+    "description": "Foldable magnetic desk stand for all phones. Adjustable angle, anti-slip base, perfect for video calls and watching.",
+    "price": "$4.99",
+    "original_price": "$12.00",
+    "category": "Accessories",
+    "badge": "Best Seller",
+    "affiliate_link": "https://s.click.aliexpress.com/YOUR-REAL-LINK"
   }
 ]
