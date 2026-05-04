@@ -721,3 +721,242 @@ footer {
   .footer-nav { flex-wrap: wrap; justify-content: center; gap: 12px; }
   .announce-bar { font-size: 0.72rem; }
 }
+
+/* ============================================================
+   NEW ADDITIONS — Product Details Page + Card Updates
+   Appended below all existing styles. Nothing above changed.
+   ============================================================ */
+
+/* --- CARD TITLE AS A LINK ---
+   Makes the title clickable without looking like a typical link
+*/
+.card-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-title-link:hover .card-title {
+  color: var(--accent); /* Title turns green on hover */
+}
+
+/* Cursor pointer on card image link */
+.card-image a {
+  display: block;
+  cursor: pointer;
+}
+
+/* --- "SEE DETAILS" BUTTON ON CARD ---
+   Replaces the old Buy Now button on product cards.
+   Styled as an outlined button so it feels secondary.
+*/
+.read-more-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  padding: 7px 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.read-more-btn:hover {
+  background: var(--accent);
+  color: #0d0d0f;
+}
+
+/* ============================================================
+   PRODUCT DETAILS PAGE — product.html
+   These styles only apply on the product details page.
+   ============================================================ */
+
+/* Outer wrapper — same max-width as rest of site */
+.product-detail-wrap {
+  max-width: 1000px;
+  margin: 48px auto;
+  padding: 0 24px 80px;
+}
+
+/* Back link at top */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--accent); }
+
+/* Two-column layout: image on left, info on right */
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Left column — product image */
+.product-detail-image {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  position: sticky;
+  top: 90px; /* Sticks below the header while scrolling */
+}
+
+.product-detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Right column — all text and buttons */
+.product-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Category + badge row at top */
+.detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.detail-category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(110, 231, 183, 0.1);
+  border: 1px solid rgba(110, 231, 183, 0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+}
+
+.detail-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0d0d0f;
+  background: #fbbf24;
+  border-radius: 100px;
+  padding: 4px 12px;
+}
+
+/* Product title on details page — bigger than card title */
+.detail-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+/* Full description — full text, proper line spacing */
+.detail-description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+/* Price row on details page */
+.detail-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.detail-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.detail-original-price {
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.detail-discount {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  background: #ef4444;
+  border-radius: 6px;
+  padding: 3px 10px;
+}
+
+/* The main Buy Now button on the details page */
+.detail-buy-btn {
+  display: block;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0d0d0f;
+  background: var(--accent);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 20px rgba(110, 231, 183, 0.25);
+}
+
+.detail-buy-btn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+}
+
+/* Small notice below the Buy Now button */
+.detail-notice {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: -8px;
+}
+
+/* Error/loading states on product page */
+.detail-error {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-muted);
+}
+
+.detail-error h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin: 16px 0 10px;
+}
+
+/* Mobile: stack image above info on small screens */
+@media (max-width: 680px) {
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .product-detail-image {
+    position: static; /* Remove sticky on mobile */
+  }
+  .detail-price { font-size: 1.6rem; }
+}

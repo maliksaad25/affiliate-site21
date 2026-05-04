@@ -190,33 +190,47 @@ function createCard(product, index) {
     ? `<span class="original-price">${product.original_price}</span>`
     : '';
 
+  // Short description preview — max 100 characters, then "..."
+  // Full description lives on the product details page
+  const shortDesc = product.description.length > 100
+    ? product.description.slice(0, 100).trimEnd() + '…'
+    : product.description;
+
+  // The link to the product details page
+  // Passes the product id in the URL e.g. product.html?id=1
+  const detailURL = `product.html?id=${product.id}`;
+
   // Fill in the card's HTML using the product data
+  // CHANGES FROM BEFORE:
+  //   - Image is now wrapped in a link → clicks open product.html
+  //   - Title is now a link → clicks open product.html
+  //   - Description shows short preview only
+  //   - "Read More" link replaces the old "Buy Now" button on the card
+  //   - Buy Now button has moved to product.html
   card.innerHTML = `
     <div class="card-image">
-      <img
-        src="${product.image}"
-        alt="${product.title}"
-        loading="lazy"
-        onerror="this.src='https://placehold.co/400x250/1e1e24/6ee7b7?text=No+Image'">
+      <a href="${detailURL}">
+        <img
+          src="${product.image}"
+          alt="${product.title}"
+          loading="lazy"
+          onerror="this.src='https://placehold.co/400x250/1e1e24/6ee7b7?text=No+Image'">
+      </a>
       <span class="card-category">${product.category}</span>
       ${discountHTML}
       ${labelHTML}
     </div>
     <div class="card-body">
-      <h3 class="card-title">${product.title}</h3>
-      <p class="card-desc">${product.description}</p>
+      <a href="${detailURL}" class="card-title-link">
+        <h3 class="card-title">${product.title}</h3>
+      </a>
+      <p class="card-desc">${shortDesc}</p>
       <div class="card-footer">
         <div class="price-group">
           <span class="card-price">${product.price}</span>
           ${origPriceHTML}
         </div>
-        <a
-          class="buy-btn"
-          href="${product.affiliate_link}"
-          target="_blank"
-          rel="noopener noreferrer">
-          🛒 Buy Now
-        </a>
+        <a href="${detailURL}" class="read-more-btn">See Details →</a>
       </div>
     </div>
   `;
