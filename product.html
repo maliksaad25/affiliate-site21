@@ -204,7 +204,11 @@
   }
 
   /* Helper function — shows a friendly error message */
-  function errorHTML(title, detail) {
+       <div class="description-wrap">
+        <p class="detail-description" id="detail-desc">${product.description}</p>
+        <button class="read-more-toggle" id="read-more-btn" onclick="toggleDesc()">Read More ↓</button>
+      </div>
+    function errorHTML(title, detail) {
     return `
       <div class="detail-error">
         <div style="font-size:3rem">⚠️</div>
