@@ -1,14 +1,14 @@
 [
   {
-    "id": 1,
-    "title": "Wireless Bluetooth Earbuds Pro",
-    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=300&fit=crop",
-    "description": "True wireless earbuds with noise cancellation, 30-hour battery, and crystal-clear sound. Perfect for daily use and workouts.",
-    "price": "$18.99",
-    "original_price": "$45.00",
-    "category": "Audio",
-    "badge": "Best Seller",
-    "affiliate_link": "https://www.aliexpress.com/item/YOUR-LINK-HERE.html"
+     "id": 2,
+     "title": "Monster AC530 Bluetooth Noise-Canceling Earphones",
+     "image": "https://ae-pic-a1.aliexpress-media.com/kf/Sefb6ac1dfa4840409a735a1244b9482ek.jpg_220x220q75.jpg_.avif",
+     "description": "High-quality wireless earphones with noise cancellation and rich sound, perfect for music and daily use.",
+     "price": "USD 28.27",
+     "original_price": "USD 65.79",
+     "category": "Audio",
+     "badge": "Hot Deal",
+     "affiliate_link": "https://s.click.aliexpress.com/e/_c2xkExqL"
   },
   {
      "id": 2,
