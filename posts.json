@@ -33,14 +33,16 @@
     "affiliate_link": "https://www.aliexpress.com/item/YOUR-LINK-HERE.html"
   },
   {
-    "id": 1,
-    "title": "Mini Magnetic Phone Stand",
-    "image": "https://ae01.alicdn.com/PASTE-IMAGE-URL-HERE.jpg",
-    "description": "Foldablecccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc magnetic desk stand for all phones. Adjustable angle, anti-slip base, perfect for video calls and watching.",
-    "price": "$4.99",
-    "original_price": "$12.00",
-    "category": "Accessories",
-    "badge": "Best Seller",
-    "affiliate_link": "https://s.click.aliexpress.com/YOUR-REAL-LINK"
+  
+     "id": 4,
+     "title": "Ryanair Cabin Travel Backpack 40x30x20",
+     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S80c26d4b4909497ca0bd7fe876f8c229O.jpg?has_lang=1&ver=1_220x220q75.jpg_.avif",
+     "description": "Compact and durable travel backpack designed to fit Ryanair cabin size limits, perfect for daily use, school, or short trips.",
+     "price": "USD 24.86",
+     "original_price": "USD 58.40",
+     "category": "Accessories",
+     "badge": "Hot Deal",
+     "affiliate_link": "https://s.click.aliexpress.com/e/_c3e4OVjz"
   }
+  
 ]
