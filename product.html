@@ -222,11 +222,15 @@
 
   /* Run everything when the page loads */
    /* Toggles the description between short and full */
-  function toggleDesc() {
+function toggleDesc() {
     const desc = document.getElementById('detail-desc');
     const btn  = document.getElementById('read-more-btn');
-    const expanded = desc.classList.toggle('expanded');
-    btn.textContent = expanded ? 'Show Less ↑' : 'Read More ↓';
+    const isExpanded = desc.classList.toggle('expanded');
+    btn.textContent = isExpanded ? 'Show Less ↑' : 'Read More ↓';
+    // Scroll button into view smoothly after collapsing
+    if (!isExpanded) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
     loadProductDetail();
   </script>
