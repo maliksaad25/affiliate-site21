@@ -993,25 +993,78 @@ footer {
   .detail-price { font-size: 1.6rem; }
 }
 /* --- READ MORE TOGGLE on product.html --- */
+/* Description wrapper — controls the height clamp */
+.description-wrap {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+/* Collapsed state — fixed height with fade at bottom */
 .detail-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  position: relative;
+  max-height: 80px;        /* Shows roughly 3 lines */
   overflow: hidden;
-  max-height: 5em;
-  transition: max-height 0.35s ease;
-  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  transition: max-height 0.4s ease;
 }
 
+/* The fade-out effect at the bottom when collapsed */
+.detail-description::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* Expanded state — remove height limit and fade */
 .detail-description.expanded {
-  -webkit-line-clamp: unset;
-  overflow: visible;
-  max-height: 2000px;
-  -webkit-mask-image: none;
-  mask-image: none;
+  max-height: 5000px;       /* Large enough for any description */
 }
 
+.detail-description.expanded::after {
+  opacity: 0;               /* Hide the fade when expanded */
+}
+
+/* Inner content styling */
+.desc-inner {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+}
+
+/* Headings inside HTML descriptions */
+.desc-inner h1, .desc-inner h2, .desc-inner h3 {
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  margin: 16px 0 8px;
+  font-size: 1rem;
+}
+
+/* Tables inside HTML descriptions */
+.desc-inner table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-top: 12px;
+}
+
+.desc-inner td, .desc-inner th {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.desc-inner th {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Read More / Show Less toggle button */
 .read-more-toggle {
   display: block;
   width: 100%;
