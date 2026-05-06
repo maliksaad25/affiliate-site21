@@ -868,45 +868,74 @@ footer {
   line-height: 1.25;
 }
 
-/* Full description — full text, proper line spacing */
+/* Description wrapper */
+.description-wrap {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+/* Collapsed state — shows ~3 lines, fades out bottom */
 .detail-description {
+  position: relative;
+  max-height: 82px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+/* Fade effect at bottom when collapsed */
+.detail-description::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+
+/* Expanded — show everything, remove fade */
+.detail-description.expanded {
+  max-height: 9999px;
+}
+
+.detail-description.expanded::after {
+  display: none;
+}
+
+/* Inner content styles */
+.desc-inner {
   font-size: 0.95rem;
   color: var(--text-muted);
   line-height: 1.85;
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-
-  /* These 4 lines do the collapsing */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
-.detail-description.expanded {
-  display: block;
-  overflow: visible;
+.desc-inner h1, .desc-inner h2, .desc-inner h3 {
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  margin: 14px 0 6px;
 }
 
-.read-more-toggle {
-  display: block;
+.desc-inner strong, .desc-inner b {
+  color: var(--text);
+}
+
+.desc-inner table {
   width: 100%;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--accent);
-  background: transparent;
-  border: 1.5px solid var(--accent);
-  border-radius: 8px;
-  padding: 8px 18px;
+  border-collapse: collapse;
+  font-size: 0.85rem;
   margin-top: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
 }
 
-.read-more-toggle:hover {
-  background: var(--accent);
-  color: #0d0d0f;
+.desc-inner td, .desc-inner th {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.desc-inner th {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 600;
 }
 
 /* Price row on details page */
@@ -992,79 +1021,8 @@ footer {
   }
   .detail-price { font-size: 1.6rem; }
 }
-/* --- READ MORE TOGGLE on product.html --- */
-/* Description wrapper — controls the height clamp */
-.description-wrap {
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-}
+/* Read More toggle button */
 
-/* Collapsed state — fixed height with fade at bottom */
-.detail-description {
-  position: relative;
-  max-height: 80px;        /* Shows roughly 3 lines */
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-}
-
-/* The fade-out effect at the bottom when collapsed */
-.detail-description::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-/* Expanded state — remove height limit and fade */
-.detail-description.expanded {
-  max-height: 5000px;       /* Large enough for any description */
-}
-
-.detail-description.expanded::after {
-  opacity: 0;               /* Hide the fade when expanded */
-}
-
-/* Inner content styling */
-.desc-inner {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  line-height: 1.85;
-}
-
-/* Headings inside HTML descriptions */
-.desc-inner h1, .desc-inner h2, .desc-inner h3 {
-  color: var(--text);
-  font-family: 'Syne', sans-serif;
-  margin: 16px 0 8px;
-  font-size: 1rem;
-}
-
-/* Tables inside HTML descriptions */
-.desc-inner table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-  margin-top: 12px;
-}
-
-.desc-inner td, .desc-inner th {
-  border: 1px solid var(--border);
-  padding: 8px 10px;
-  text-align: left;
-}
-
-.desc-inner th {
-  background: var(--surface-2);
-  color: var(--text);
-  font-weight: 600;
-}
-
-/* Read More / Show Less toggle button */
 .read-more-toggle {
   display: block;
   width: 100%;
