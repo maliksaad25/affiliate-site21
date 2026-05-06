@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <!--
   product.html — Individual Product Details Page
-  
-  HOW THIS PAGE WORKS (simple explanation):
-  - When a user clicks a product title or image on index.html,
-    they are sent to this page with a URL like:
-    product.html?id=1
-  - The "?id=1" part tells this page WHICH product to show.
-  - This page reads that id, opens posts.json, finds the matching
-    product, and displays all its information.
-  
-  YOU DO NOT NEED TO EDIT THIS FILE when adding new products.
-  It works automatically for every product in posts.json.
+  HOW THIS PAGE WORKS:
+  - User clicks a product on index.html
+  - Browser goes to product.html?id=3
+  - This page reads "3", finds that product in posts.json
+  - Displays full product info + Buy Now button
+  You do NOT need to edit this file when adding products.
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Title is set dynamically by JavaScript below -->
   <title>Product Details — TechNest</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Announcement Bar — same as all pages -->
+  <!-- Announcement Bar -->
   <div class="announce-bar">
     <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; 100% Secure Shopping 🛡️</span>
   </div>
 
-  <!-- Header — same as all pages -->
+  <!-- Header -->
   <header>
     <div class="header-inner">
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
@@ -41,24 +35,15 @@
     </div>
   </header>
 
-  <!-- ======================================================
-       PRODUCT DETAIL CONTENT
-       Everything inside here is filled in by JavaScript.
-       The id="product-detail" div is the target.
-       ====================================================== -->
+  <!-- Product Detail Content -->
   <div class="product-detail-wrap">
-
-    <!-- Back link — always visible at the top -->
     <a href="index.html" class="back-link">← Back to All Products</a>
-
-    <!-- This div is empty on load. JavaScript fills it in. -->
     <div id="product-detail">
-      <!-- Content appears here automatically -->
+      <!-- Filled in by JavaScript below -->
     </div>
-
   </div>
 
-  <!-- Footer — same as all pages -->
+  <!-- Footer -->
   <footer>
     <div class="footer-inner">
       <div class="footer-logo">Tech<span>Nest</span></div>
@@ -76,163 +61,167 @@
   </footer>
 
   <script>
-  /* ============================================================
-     product.html — Inline JavaScript
-     
-     This script does 4 things:
-     1. Reads the product id from the URL (e.g. ?id=2)
-     2. Opens posts.json and finds the matching product
-     3. Builds and displays the full product details
-     4. Updates the browser tab title with the product name
-     
-     No changes needed here when you add products.
-     It works automatically for any id in posts.json.
-  ============================================================ */
 
-  async function loadProductDetail() {
-    const detailDiv = document.getElementById('product-detail');
+    /* ============================================================
+       TOGGLE FUNCTION — Read More / Show Less
+       Toggles the description height between collapsed and expanded.
+       Works with both plain text AND HTML descriptions.
+    ============================================================ */
+    function toggleDesc() {
+      var desc = document.getElementById('detail-desc');
+      var btn  = document.getElementById('read-more-btn');
+      if (!desc || !btn) return;
 
-    // --- STEP 1: Read the ?id= value from the URL ---
-    // e.g. if URL is product.html?id=3, productId will be "3"
-    const params    = new URLSearchParams(window.location.search);
-    const productId = params.get('id'); // gets the value after "?id="
-
-    // If there's no id in the URL, show an error
-    if (!productId) {
-      detailDiv.innerHTML = errorHTML('No product selected.', 'Go back and click a product.');
-      return;
-    }
-
-    // --- STEP 2: Load all products from posts.json ---
-    let products;
-    try {
-      const res = await fetch('./posts.json');
-      if (!res.ok) throw new Error('posts.json not found');
-      products = await res.json();
-    } catch (err) {
-      detailDiv.innerHTML = errorHTML('Could not load products.', err.message);
-      return;
-    }
-
-    // --- STEP 3: Find the product whose id matches the URL ---
-    // String(p.id) converts number to string so "3" === "3" works
-    const product = products.find(p => String(p.id) === productId);
-
-    if (!product) {
-      detailDiv.innerHTML = errorHTML('Product not found.', 'It may have been removed. Go back to browse all products.');
-      return;
-    }
-
-    // --- STEP 4: Update the browser tab title ---
-    document.title = `${product.title} — TechNest`;
-
-    // --- STEP 5: Calculate discount if both prices exist ---
-    let discountHTML = '';
-    if (product.original_price && product.price) {
-      const orig = parseFloat(product.original_price.replace(/[^0-9.]/g, ''));
-      const curr = parseFloat(product.price.replace(/[^0-9.]/g, ''));
-      if (orig > curr) {
-        const pct = Math.round((1 - curr / orig) * 100);
-        discountHTML = `<span class="detail-discount">-${pct}% OFF</span>`;
+      if (desc.classList.contains('expanded')) {
+        desc.classList.remove('expanded');
+        btn.textContent = 'Read More \u2193';
+        desc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        desc.classList.add('expanded');
+        btn.textContent = 'Show Less \u2191';
       }
     }
 
-    // Badge HTML
-    const badgeHTML = product.badge
-      ? `<span class="detail-badge">${product.badge}</span>`
-      : '';
+    /* ============================================================
+       MAIN FUNCTION — Load and display the product
+    ============================================================ */
+    async function loadProductDetail() {
+      var detailDiv = document.getElementById('product-detail');
 
-    // Original price HTML
-    const origPriceHTML = product.original_price
-      ? `<span class="detail-original-price">${product.original_price}</span>`
-      : '';
+      /* STEP 1: Read ?id= from the URL */
+      var params    = new URLSearchParams(window.location.search);
+      var productId = params.get('id');
 
-    // --- STEP 6: Build and inject the full product HTML ---
-    detailDiv.innerHTML = `
-    // --- STEP 6: Build and inject the full product HTML ---
-    detailDiv.innerHTML = `
-      <div class="product-detail-grid">
+      if (!productId) {
+        detailDiv.innerHTML = makeError('No product selected.', 'Go back and click a product.');
+        return;
+      }
 
-        <!-- LEFT COLUMN: Product Image -->
-        <div class="product-detail-image">
-          <img
-            src="${product.image}"
-            alt="${product.title}"
-            onerror="this.src='https://placehold.co/600x450/1e1e24/6ee7b7?text=No+Image'">
-        </div>
+      /* STEP 2: Load posts.json */
+      var products;
+      try {
+        var res = await fetch('./posts.json');
+        if (!res.ok) throw new Error('posts.json not found — HTTP ' + res.status);
+        products = await res.json();
+      } catch (err) {
+        detailDiv.innerHTML = makeError('Could not load products.', err.message);
+        return;
+      }
 
-        <!-- RIGHT COLUMN: All product information -->
-        <div class="product-detail-info">
+      /* STEP 3: Find the matching product by id */
+      var product = null;
+      for (var i = 0; i < products.length; i++) {
+        if (String(products[i].id) === String(productId)) {
+          product = products[i];
+          break;
+        }
+      }
 
-          <!-- Category label + badge -->
-          <div class="detail-meta">
-            <span class="detail-category">${product.category}</span>
-            ${badgeHTML}
-          </div>
+      if (!product) {
+        detailDiv.innerHTML = makeError('Product not found.', 'It may have been removed.');
+        return;
+      }
 
-          <!-- Full product title -->
-          <h1 class="detail-title">${product.title}</h1>
+      /* STEP 4: Update the browser tab title */
+      document.title = product.title + ' — TechNest';
 
-          <!-- Price row -->
-          <div class="detail-pricing">
-            <span class="detail-price">${product.price}</span>
-            ${origPriceHTML}
-            ${discountHTML}
-          </div>
+      /* STEP 5: Build badge HTML */
+      var badgeHTML = '';
+      if (product.badge) {
+        badgeHTML = '<span class="detail-badge">' + product.badge + '</span>';
+      }
 
-          <!-- Description with Read More toggle -->
-          <div class="description-wrap">
-            <div class="detail-description" id="detail-desc">
-              <div class="desc-inner">${product.description}</div>
-            </div>
-            <button class="read-more-toggle" id="read-more-btn" onclick="toggleDesc()">
-              Read More ↓
-            </button>
-          </div>
+      /* STEP 6: Build original price HTML */
+      var origPriceHTML = '';
+      if (product.original_price) {
+        origPriceHTML = '<span class="detail-original-price">' + product.original_price + '</span>';
+      }
 
-          <!-- Buy Now button -->
-          
-            href="${product.affiliate_link}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="detail-buy-btn">
-            🛒 Buy Now on AliExpress
-          </a>
+      /* STEP 7: Calculate and build discount HTML */
+      var discountHTML = '';
+      if (product.original_price && product.price) {
+        var orig = parseFloat(product.original_price.replace(/[^0-9.]/g, ''));
+        var curr = parseFloat(product.price.replace(/[^0-9.]/g, ''));
+        if (orig > curr) {
+          var pct = Math.round((1 - curr / orig) * 100);
+          discountHTML = '<span class="detail-discount">-' + pct + '% OFF</span>';
+        }
+      }
 
-          <p class="detail-notice">
-            You will be taken to AliExpress. We may earn a small commission at no extra cost to you.
-          </p>
+      /* STEP 8: Build the full page HTML using string concatenation
+         NOTE: We use string concatenation (+) instead of template literals
+         to avoid any backtick conflicts with HTML content in descriptions.
+      */
+      var html = '';
+      html += '<div class="product-detail-grid">';
 
-        </div>
-      </div>
-    `;
-  }
+      /* Left column — image */
+      html += '<div class="product-detail-image">';
+      html += '<img src="' + product.image + '" alt="' + product.title + '" ';
+      html += 'onerror="this.src=\'https://placehold.co/600x450/1e1e24/6ee7b7?text=No+Image\'">';
+      html += '</div>';
 
-  /* Helper function — shows a friendly error message */
-      
-    function errorHTML(title, detail) {
-    return `
-      <div class="detail-error">
-        <div style="font-size:3rem">⚠️</div>
-        <h2>${title}</h2>
-        <p>${detail}</p>
-        <a href="index.html" class="read-more-btn" style="display:inline-block;margin-top:20px;">← Back to Products</a>
-      </div>`;
-  }
+      /* Right column — all info */
+      html += '<div class="product-detail-info">';
 
-  /* Run everything when the page loads */
-   /* Toggles the description between short and full */
-function toggleDesc() {
-    const desc = document.getElementById('detail-desc');
-    const btn  = document.getElementById('read-more-btn');
-    const isExpanded = desc.classList.toggle('expanded');
-    btn.textContent = isExpanded ? 'Show Less ↑' : 'Read More ↓';
-    // Scroll button into view smoothly after collapsing
-    if (!isExpanded) {
-      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      /* Category + badge */
+      html += '<div class="detail-meta">';
+      html += '<span class="detail-category">' + (product.category || 'General') + '</span>';
+      html += badgeHTML;
+      html += '</div>';
+
+      /* Title */
+      html += '<h1 class="detail-title">' + product.title + '</h1>';
+
+      /* Pricing */
+      html += '<div class="detail-pricing">';
+      html += '<span class="detail-price">' + product.price + '</span>';
+      html += origPriceHTML;
+      html += discountHTML;
+      html += '</div>';
+
+      /* Description with Read More toggle */
+      html += '<div class="description-wrap">';
+      html += '<div class="detail-description" id="detail-desc">';
+      html += '<div class="desc-inner">' + product.description + '</div>';
+      html += '</div>';
+      html += '<button class="read-more-toggle" id="read-more-btn" onclick="toggleDesc()">';
+      html += 'Read More \u2193';
+      html += '</button>';
+      html += '</div>';
+
+      /* Buy Now button */
+      html += '<a href="' + product.affiliate_link + '" ';
+      html += 'target="_blank" rel="noopener noreferrer" class="detail-buy-btn">';
+      html += '🛒 Buy Now on AliExpress';
+      html += '</a>';
+
+      /* Notice */
+      html += '<p class="detail-notice">';
+      html += 'You will be taken to AliExpress. We may earn a small commission at no extra cost to you.';
+      html += '</p>';
+
+      html += '</div>'; /* close product-detail-info */
+      html += '</div>'; /* close product-detail-grid */
+
+      detailDiv.innerHTML = html;
     }
-  }
+
+    /* ============================================================
+       ERROR HELPER — Shows a friendly message if something fails
+    ============================================================ */
+    function makeError(title, detail) {
+      return '<div class="detail-error">'
+        + '<div style="font-size:3rem">⚠️</div>'
+        + '<h2>' + title + '</h2>'
+        + '<p>' + detail + '</p>'
+        + '<a href="index.html" class="read-more-btn" style="display:inline-block;margin-top:20px;">← Back to Products</a>'
+        + '</div>';
+    }
+
+    /* Start everything */
     loadProductDetail();
+
   </script>
 
 </body>
