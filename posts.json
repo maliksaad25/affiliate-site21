@@ -45,14 +45,43 @@
       "affiliate_link": "https://s.click.aliexpress.com/e/_c3JKgCo3"
   },
   {
-     "id": "5",
-     "title": "Smart Robot Window Cleaner Vacuum for Effortless Home Cleaning",
-     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S9074e57265cb42a986ea7b8ca7cfc96dx.png?has_lang=1&ver=2_220x220.png_.avif",
-     "description": "<h2>Smart Window Cleaning Made Easy</h2><p>Keep your windows spotless with this <b>automatic robot window cleaner</b>. Its powerful vacuum suction helps clean glass surfaces quickly and safely without manual effort.</p><br><h2>Perfect for Modern Homes</h2><p>This smart cleaning device is designed for apartments, offices, and large windows. Enjoy easier cleaning, save time, and maintain sparkling glass with minimal work.</p>",
-     "price": "$66.13",
-     "category": "Accessories",
-     "rating": "4.7",
-     "affiliate_link": "https://s.click.aliexpress.com/e/_c30pmAcb"
+      "id": "5",
+      "title": "Smart Robot Window Cleaner Vacuum for Effortless Home Cleaning",
+      "image": "https://ae-pic-a1.aliexpress-media.com/kf/S9074e57265cb42a986ea7b8ca7cfc96dx.png?has_lang=1&ver=2_220x220.png_.avif",
+      "description": "<h2>Smart Window Cleaning Made Easy</h2><p>Keep your windows spotless with this <b>automatic robot window cleaner</b>. Its powerful vacuum suction helps clean glass surfaces quickly and safely without manual effort.</p><br><h2>Perfect for Modern Homes</h2><p>This smart cleaning device is designed for apartments, offices, and large windows. Enjoy easier cleaning, save time, and maintain sparkling glass with minimal work.</p>",
+      "price": "$66.13",
+      "category": "Accessories",
+      "rating": "4.7",
+      "affiliate_link": "https://s.click.aliexpress.com/e/_c30pmAcb"
+  },
+  {
+      "id": "6",
+      "title": "WiFi Smart Thermostat for Floor Heating and Boiler Control",
+      "image": "https://ae-pic-a1.aliexpress-media.com/kf/S0bc0da7a994f439892bfc787f2e9fe3aH.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif",
+      "description": "<h2>Smart Temperature Control</h2><p>Control your home heating with this <b>WiFi smart thermostat</b> using your smartphone or voice assistant.</p><br><h2>Comfort and Energy Saving</h2><p>Works with Alexa and Google Home to maintain a comfortable temperature while reducing energy usage.</p>",
+      "price": "$34.99",
+      "category": "Accessories",
+      "rating": "4.8",
+      "affiliate_link": "https://s.click.aliexpress.com/e/_c3egw4nh"
+  },
+  {
+       "id": "7",
+       "title": "Zigbee Smart Rain Sensor with Brightness Detection for Home Automation",
+       "image": "https://ae-pic-a1.aliexpress-media.com/kf/S1ebb312dba584f9ca396f6d0523ddfcbd.jpg_220x220q75.jpg_.avif",
+       "description": "<h2>Smart Weather Monitoring</h2><p>Track rainfall and light levels with this <b>Zigbee smart rain sensor</b> for your smart home setup.</p><br><h2>Works with Smart Home Systems</h2><p>Compatible with Tuya Smart Life, Home Assistant, and Zigbee2MQTT for easy automation and alerts.</p>",
+       "price": "$29.99",
+       "category": "Accessories",
+       "rating": "4.7",
+       "affiliate_link": "https://s.click.aliexpress.com/e/_c3r4y4vH"   
+  },
+  {
+       "id": "8",
+       "title": "FNIRSI LPM-10A Smart Cable Locator and Network Line Tracker",
+       "image": "https://ae-pic-a1.aliexpress-media.com/kf/S7d22d922b7cf419390390b9ecbc03e43m.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif",
+       "description": "<h2>Smart Cable Detection Tool</h2><p>Quickly identify and test network cables with this <b>FNIRSI smart cable locator</b> for repair and maintenance work.</p><br><h2>Accurate and Easy to Use</h2><p>Features anti-interference technology, flash port detection, and cable length testing for efficient troubleshooting.</p>",
+       "price": "$42.99",
+       "category": "Accessories",
+       "rating": "4.8",
+       "affiliate_link": "https://s.click.aliexpress.com/e/_c3DsJeHz"
   }
-  
 ]
