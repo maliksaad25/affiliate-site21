@@ -862,12 +862,14 @@ footer {
 /* Product title on details page — bigger than card title */
 .detail-title {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 800;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 700;
   color: var(--text);
-  line-height: 1.25;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  max-width: 600px;
+  text-wrap: balance;
 }
-
 /* Description wrapper */
 .description-wrap {
   border-top: 1px solid var(--border);
