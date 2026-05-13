@@ -103,5 +103,15 @@
         "category": "Accessories",
         "rating": "4.7",
         "affiliate_link": "https://s.click.aliexpress.com/e/_c3T5FaN1"
-   }
+   },
+   { 
+         "id": "11",
+         "title": "KUULAA 10000mAh Magnetic Wireless Power Bank with 20W Fast Charging",
+         "image": "https://ae-pic-a1.aliexpress-media.com/kf/S7b2b869309f7486ab97a643c0483487eB.png?has_lang=1&ver=2_220x220.png_.avif",
+         "description": "<h2>Fast Magnetic Charging</h2><p>This <b>10000mAh magnetic power bank</b> delivers fast wireless and 20W wired charging for iPhone and other devices.</p><br><h2>Perfect for Travel & Daily Use</h2><p>Compact and portable design keeps your phone powered anywhere with secure magnetic attachment and reliable battery backup.</p>",
+         "price": "$33.99",
+         "category": "Accessories",
+         "rating": "4.7",
+         "affiliate_link": "https://s.click.aliexpress.com/e/_c3d5xmmj"
+  }
 ]
