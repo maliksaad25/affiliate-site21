@@ -143,5 +143,26 @@
          "category": "Home Theater Projectors",
          "rating": "4.9",
          "affiliate_link": "https://s.click.aliexpress.com/e/_c3dkf9Pb"
-  }
+  },
+  {
+          "id": "15",
+          "title": "GL.iNet GL-SFT1200 (Opal) AC1200 Travel WiFi Router – Portable Dual Band Gigabit Internet for Digital Nomads",
+          "image": "https://i.pinimg.com/736x/f2/8b/6c/f28b6c3bfee65a16e626d85a0690feec.jpg",
+          "description": "<h2><p><b> is a pocket-sized <b> built for remote workers and adventurers. Enjoy <b> on the go with <b> and easy VPN setup.<p><b> and share one connection across all your devices effortlessly.",
+          "price": "$45.71",
+          "category": "Travel Tech & Networking",
+          "rating": "4.6",
+          "affiliate_link": "https://s.click.aliexpress.com/e/_c3BXd4pF"
+    },
+    {
+           "id": "16",
+           "title": "Tenda AX3000 WiFi 6 Mesh System – Whole Home Coverage Up to 7000 Sq.Ft. | Blazing Fast Wireless Router",
+           "image": "https://i.pinimg.com/736x/f4/d5/d8/f4d5d851da29178fe7cc1642123f7c37.jpg",
+           "description": "<h2><p><b> blankets up to <b> with blazing-fast, seamless WiFi. <b> anywhere in your home.<p><b> while handling <b> at once. Easy mesh setup with <b> and one network name for effortless whole-home coverage.",
+           "price": "$51.68",
+           "category": "Home Networking & Smart Tech",
+           "rating": "4.5",
+           "affiliate_link": "https://s.click.aliexpress.com/e/_c3Apmy4v"
+     }
+             
 ]
