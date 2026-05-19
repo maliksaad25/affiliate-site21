@@ -241,15 +241,34 @@ function createCard(product, index) {
 /* ============================================================
    STEP 6: LOAD MORE BUTTON
    When clicked, shows the next "page" of products.
+
+   FIX: The old scrollIntoView() was causing an upward page jump
+   because the layout shifted when new cards were added.
+
+   New approach:
+   1. Save the exact scroll position BEFORE adding cards
+   2. Add the new cards
+   3. Wait for the browser to paint them (double requestAnimationFrame)
+   4. Silently restore the saved scroll position
+   Result: page stays exactly where the user was — no jump.
    ============================================================ */
 loadMoreBtn.addEventListener('click', () => {
-  currentPage++;              // Go to the next page
-  renderProducts(false);      // Add more cards WITHOUT clearing existing ones
 
-  // Smooth-scroll to the new cards
-  const cards = grid.querySelectorAll('.card');
-  const firstNew = cards[cards.length - PRODUCTS_PER_PAGE];
-  if (firstNew) firstNew.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Step 1 — Lock scroll position before anything changes
+  const scrollYBefore = window.scrollY;
+
+  // Step 2 — Load the next page of products
+  currentPage++;
+  renderProducts(false); // false = add cards, don't clear existing ones
+
+  // Step 3 — After browser paints new cards, silently restore position
+  // Double requestAnimationFrame ensures the DOM has fully updated
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollYBefore, behavior: 'instant' });
+    });
+  });
+
 });
 
 /* ============================================================
