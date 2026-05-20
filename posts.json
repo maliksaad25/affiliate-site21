@@ -153,8 +153,8 @@
           "category": "Travel Tech & Networking",
           "rating": "4.6",
           "affiliate_link": "https://s.click.aliexpress.com/e/_c3BXd4pF"
-    },
-    {
+ },
+ {
            "id": "16",
            "title": "Tenda AX3000 WiFi 6 Mesh System – Whole Home Coverage Up to 7000 Sq.Ft. | Blazing Fast Wireless Router",
            "image": "https://i.pinimg.com/736x/f4/d5/d8/f4d5d851da29178fe7cc1642123f7c37.jpg",
@@ -163,8 +163,8 @@
            "category": "Home Networking & Smart Tech",
            "rating": "4.5",
            "affiliate_link": "https://s.click.aliexpress.com/e/_c3Apmy4v"
-     },
-     {
+ },
+ {
            "id": "17",
            "title": "Heavy Duty 300kg Digital Crane Scale with Bluetooth – Smart Wireless Hanging Hook Weight Scale",
            "image": "https://i.pinimg.com/736x/39/4a/16/394a162ff8466edad47874c126c438d4.jpg",
@@ -172,8 +172,8 @@
            "price": "$24.80",
            "category": "Industrial Tools & Equipment",
            "affiliate_link": "https://s.click.aliexpress.com/e/_c42J6mml"
-     },
-     {
+  },
+  {
            "id": "18",
            "title": "30kg Precision Digital Food Scale – Smart Price-Computing Electronic Commercial Balance for Kitchen & Retail",
            "image": "https://ae-pic-a1.aliexpress-media.com/kf/S04b6e471b34e47d99920d545880d8a63y.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif",
@@ -181,8 +181,8 @@
            "price": "$28.91",
            "category": "Kitchen & Dining",
            "affiliate_link": "https://s.click.aliexpress.com/e/_c38r0o2z"
-     },
-     {
+   },
+   {
           "id": "19",
           "title": "MHW-3BOMBER Smart Digital Coffee Scale – High-Precision Rechargeable Espresso Scale with Timer",
           "image": "https://i.pinimg.com/736x/31/85/3a/31853a6dc41144480c50ed1d7e013a69.jpg",
@@ -190,8 +190,8 @@
           "price": "$48.00",
           "category": "Kitchen & Dining",
           "affiliate_link": "https://s.click.aliexpress.com/e/_c4aKBDEp"
-     },
-     {
+   },
+   {
           "id": "20",
           "title": "Artpowers Aluminum Tablet & Monitor Arm Stand – 360° Rotating Adjustable Mechanical Desk Clamp Mount for iPad & Screens",
           "image": "https://i.pinimg.com/736x/b5/8e/74/b58e7411ebe886858874061a79265bcc.jpg",
@@ -199,8 +199,8 @@
           "price": "$22.88",
           "category": "Electronics / Tablet & Monitor Mounts",
           "affiliate_link": "https://s.click.aliexpress.com/e/_c3X9PcW9"
-    },
-    {
+  },
+  {
            "id": "21",
            "title": "Kimdoole Heavy Duty Cantilever Tablet Stand – 360° Rotating Adjustable Desktop Mount for Monitors, Tablets & Phones",
            "image": "https://i.pinimg.com/736x/d7/7b/eb/d77beb0aba41b17c5d1db47a1064ff9e.jpg",
@@ -244,6 +244,15 @@
            "price": "$28.16",
            "category": "Smart Reptile Fogger",
            "affiliate_link": "https://s.click.aliexpress.com/e/_c3mfuEU1"
-   }
+   },
+   {
+          "id": "26",
+          "title": "Minimalist S-Shape LED Wall Sconce | Black & Gold Luxury Ambient Light for Bedroom & Living Room",
+          "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80",
+          "description": "<h2>Instant Luxury Room Upgrade for Under $20</h2><p>Transform any blank wall into a <b>high-end interior statement</b> with this stunning <b>S-shaped black and gold LED wall sconce</b> — the easiest and most affordable home decor hack available.</p><br><h2>Warm Ambient Glow & Modern Design</h2><p>Designed to cast a <b>soft, warm ambient light</b>, this minimalist fixture creates a <b>cozy, expensive-looking atmosphere</b> perfect for bedrooms, living rooms, and modern apartments at any hour.</p><br><h2>Simple Install, Maximum Impact</h2><p>No electrician needed — this <b>easy-to-mount LED wall lamp</b> delivers <b>boutique hotel aesthetics</b> to your home instantly, making it the ultimate style upgrade for any budget-conscious decorator.</p>",
+          "price": "$20.96",
+          "category": "Wall Lights & Sconces", 
+          "affiliate_link": "https://s.click.aliexpress.com/e/_c3HegkKp"
+  }
 
 ] 
