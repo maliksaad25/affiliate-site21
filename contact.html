@@ -1,23 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4KRE9E445"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-G4KRE9E445');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — TechNest</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Favicon — shows the icon in browser tabs -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
 
@@ -46,13 +33,27 @@
       <p>We typically reply within 24–48 hours.</p>
       <br>
       <!--
-        TO MAKE THIS FORM SEND REAL EMAILS (free):
-        1. Go to https://formspree.io and sign up
-        2. Create a new form — copy your Form ID
-        3. Replace YOUR_FORM_ID below with your real ID
-           e.g. action="https://formspree.io/f/xbjwkqra"
+        NETLIFY FORMS — works automatically once deployed on Netlify.
+        No signup, no API key, no JavaScript needed.
+        Required attributes: data-netlify="true" + name="contact" + the
+        hidden "form-name" input below. Netlify detects this at build time.
       -->
-      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form
+        class="contact-form"
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/thank-you.html">
+
+        <!-- Required so Netlify's build bot can detect this form -->
+        <input type="hidden" name="form-name" value="contact">
+
+        <!-- Honeypot spam trap — keep hidden, real users never fill this -->
+        <p style="display:none">
+          <label>Don't fill this out if you're human: <input name="bot-field"></label>
+        </p>
+
         <div class="form-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" name="name" placeholder="e.g. Sarah Khan" required>
