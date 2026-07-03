@@ -1,5 +1,4 @@
 
-Script · JS
 /* ============================================================
    script.js — All the interactive logic for TechNest
    This file does 3 main things:
@@ -7,12 +6,12 @@ Script · JS
      2. Builds and shows the product cards
      3. Handles filtering and "Load More"
    ============================================================ */
- 
+
 /* --- SETTINGS ---
    Change PRODUCTS_PER_PAGE to show more/fewer cards at a time.
 */
 const PRODUCTS_PER_PAGE = 6;
- 
+
 /* --- STATE VARIABLES ---
    These variables keep track of what's happening on the page.
 */
@@ -20,7 +19,7 @@ let allProducts   = [];    // Every product loaded from posts.json
 let filtered      = [];    // Products after a filter is applied
 let currentPage   = 1;     // Which "page" of results we're on
 let activeFilter  = 'All'; // Which filter button is selected
- 
+
 /* --- DOM REFERENCES ---
    These link our JavaScript to specific HTML elements.
    document.getElementById('someId') finds an element by its id="" attribute.
@@ -30,7 +29,7 @@ const loadMoreBtn   = document.getElementById('load-more-btn');
 const countEl       = document.getElementById('product-count');
 const filterGroup   = document.getElementById('filter-group');
 const categoryGrid  = document.getElementById('category-grid'); // "Shop by Category" cards
- 
+
 /* ============================================================
    STEP 1: FETCH PRODUCTS FROM posts.json
    This runs automatically when the page loads.
@@ -39,26 +38,26 @@ const categoryGrid  = document.getElementById('category-grid'); // "Shop by Cate
 async function loadProducts() {
   // Show a loading spinner while we fetch the data
   showLoading();
- 
+
   try {
     // fetch() reads posts.json — like opening a file
     const response = await fetch('./posts.json');
- 
+
     // If the file wasn't found, throw an error
     if (!response.ok) throw new Error('Could not load posts.json');
- 
+
     // Convert the file contents into a JavaScript array
     allProducts = await response.json();
- 
+
     // Build the filter buttons from the categories in posts.json
     buildFilters();
- 
+
     // Build the "Shop by Category" cards from the categories in posts.json
     buildCategoryShowcase();
- 
+
     // Show all products (no filter applied yet)
     applyFilter('All');
- 
+
   } catch (error) {
     // If something went wrong, show an error message
     grid.innerHTML = `
@@ -70,7 +69,7 @@ async function loadProducts() {
     loadMoreBtn.classList.add('hidden');
   }
 }
- 
+
 /* ============================================================
    STEP 2: BUILD FILTER BUTTONS AUTOMATICALLY
    This reads the "category" field from each product in posts.json
@@ -79,7 +78,7 @@ async function loadProducts() {
 function buildFilters() {
   // Extract all category values and remove duplicates using Set
   const categories = ['All', ...new Set(allProducts.map(p => p.category))];
- 
+
   // Build the HTML for each filter button
   filterGroup.innerHTML = categories.map(cat => `
     <button
@@ -88,7 +87,7 @@ function buildFilters() {
       ${cat}
     </button>
   `).join('');
- 
+
   // Add a click event to each button
   filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -96,7 +95,7 @@ function buildFilters() {
     });
   });
 }
- 
+
 /* ============================================================
    NEW: BUILD "SHOP BY CATEGORY" CARDS
    Reads every category from posts.json, counts how many products
@@ -107,16 +106,16 @@ function buildFilters() {
    ============================================================ */
 function buildCategoryShowcase() {
   if (!categoryGrid) return; // Safety check — section may not exist on every page
- 
+
   // Count how many products belong to each category
   const counts = {};
   allProducts.forEach(p => {
     counts[p.category] = (counts[p.category] || 0) + 1;
   });
- 
+
   // Sort categories by number of products (most popular first)
   const sortedCategories = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
- 
+
   // "All Products" card first, then one card per category
   const cardsHTML = [
     `<button class="category-card active" data-category="All">
@@ -132,9 +131,9 @@ function buildCategoryShowcase() {
       </button>
     `)
   ].join('');
- 
+
   categoryGrid.innerHTML = cardsHTML;
- 
+
   // Clicking a card applies the existing filter and scrolls to the grid
   categoryGrid.querySelectorAll('.category-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -143,7 +142,7 @@ function buildCategoryShowcase() {
     });
   });
 }
- 
+
 /* ============================================================
    NEW: PICK AN ICON FOR A CATEGORY
    Matches keywords in the category name to a relevant emoji icon.
@@ -166,13 +165,13 @@ function getCategoryIcon(category) {
     [['reptile', 'fogger'], '🦎'],
     [['accessories'], '🎒'],
   ];
- 
+
   for (const [keywords, icon] of iconMap) {
     if (keywords.some(k => c.includes(k))) return icon;
   }
   return '✨'; // Default fallback icon
 }
- 
+
 /* ============================================================
    NEW: SHORTEN LONG CATEGORY NAMES FOR CARD DISPLAY
    e.g. "Electronics / Tablet & Monitor Mounts" -> "Tablet & Monitor Mounts"
@@ -185,7 +184,7 @@ function shortenCategoryName(category) {
   }
   return category;
 }
- 
+
 /* ============================================================
    STEP 3: APPLY A FILTER
    Called when user clicks a filter button, or on first load.
@@ -193,30 +192,30 @@ function shortenCategoryName(category) {
 function applyFilter(category) {
   activeFilter = category;
   currentPage  = 1; // Reset to first page whenever filter changes
- 
+
   // Update which button looks "active" (highlighted)
   filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.category === category);
   });
- 
+
   // Keep the "Shop by Category" cards in sync with the active filter
   if (categoryGrid) {
     categoryGrid.querySelectorAll('.category-card').forEach(card => {
       card.classList.toggle('active', card.dataset.category === category);
     });
   }
- 
+
   // Filter the product list:
   // If "All" is selected, keep everything.
   // Otherwise, keep only products matching the selected category.
   filtered = (category === 'All')
     ? allProducts
     : allProducts.filter(p => p.category === category);
- 
+
   // Render (draw) the cards on screen
   renderProducts(true); // true = clear the grid first
 }
- 
+
 /* ============================================================
    STEP 4: RENDER PRODUCTS (Draw cards on screen)
    clearGrid = true means we wipe existing cards first (used when filtering)
@@ -224,15 +223,15 @@ function applyFilter(category) {
    ============================================================ */
 function renderProducts(clearGrid = false) {
   if (clearGrid) grid.innerHTML = '';
- 
+
   // Figure out which products to show on this "page"
   const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const end   = start + PRODUCTS_PER_PAGE;
   const pageItems = filtered.slice(start, end);
- 
+
   // Update the "X products found" counter
   countEl.innerHTML = `<span>${filtered.length}</span> product${filtered.length !== 1 ? 's' : ''} found`;
- 
+
   // If there are no products to show, display empty state
   if (filtered.length === 0) {
     grid.innerHTML = `
@@ -243,13 +242,13 @@ function renderProducts(clearGrid = false) {
     loadMoreBtn.classList.add('hidden');
     return;
   }
- 
+
   // For each product in this page, create a card and add it to the grid
   pageItems.forEach((product, index) => {
     const card = createCard(product, index);
     grid.appendChild(card);
   });
- 
+
   // Show or hide the "Load More" button
   const totalShown = end;
   if (totalShown >= filtered.length) {
@@ -258,7 +257,7 @@ function renderProducts(clearGrid = false) {
     loadMoreBtn.classList.remove('hidden'); // More to show — show button
   }
 }
- 
+
 /* ============================================================
    STEP 5: CREATE A SINGLE PRODUCT CARD
    This builds the HTML for one product and returns it.
@@ -267,10 +266,10 @@ function createCard(product, index) {
   // Create a <div> element for the card
   const card = document.createElement('div');
   card.className = 'card';
- 
+
   // Add a small delay per card for a staggered animation effect
   card.style.animationDelay = `${index * 60}ms`;
- 
+
   // Calculate discount % if both prices exist
   let discountHTML = '';
   if (product.original_price && product.price) {
@@ -281,27 +280,27 @@ function createCard(product, index) {
       discountHTML = `<span class="discount-badge">-${pct}%</span>`;
     }
   }
- 
+
   // Label badge (e.g. "Best Seller", "Hot Deal")
   const labelHTML = product.badge
     ? `<span class="label-badge">${product.badge}</span>`
     : '';
- 
+
   // Strikethrough original price
   const origPriceHTML = product.original_price
     ? `<span class="original-price">${product.original_price}</span>`
     : '';
- 
+
   // Short description preview — max 100 characters, then "..."
   // Full description lives on the product details page
   const shortDesc = product.description.length > 100
     ? product.description.slice(0, 100).trimEnd() + '…'
     : product.description;
- 
+
   // The link to the product details page
   // Passes the product id in the URL e.g. product.html?id=1
   const detailURL = `product.html?id=${product.id}`;
- 
+
   // Fill in the card's HTML using the product data
   // CHANGES FROM BEFORE:
   //   - Image is now wrapped in a link → clicks open product.html
@@ -336,17 +335,17 @@ function createCard(product, index) {
       </div>
     </div>
   `;
- 
+
   return card;
 }
- 
+
 /* ============================================================
    STEP 6: LOAD MORE BUTTON
    When clicked, shows the next "page" of products.
- 
+
    FIX: The old scrollIntoView() was causing an upward page jump
    because the layout shifted when new cards were added.
- 
+
    New approach:
    1. Save the exact scroll position BEFORE adding cards
    2. Add the new cards
@@ -355,14 +354,14 @@ function createCard(product, index) {
    Result: page stays exactly where the user was — no jump.
    ============================================================ */
 loadMoreBtn.addEventListener('click', () => {
- 
+
   // Step 1 — Lock scroll position before anything changes
   const scrollYBefore = window.scrollY;
- 
+
   // Step 2 — Load the next page of products
   currentPage++;
   renderProducts(false); // false = add cards, don't clear existing ones
- 
+
   // Step 3 — After browser paints new cards, silently restore position
   // Double requestAnimationFrame ensures the DOM has fully updated
   requestAnimationFrame(() => {
@@ -370,9 +369,9 @@ loadMoreBtn.addEventListener('click', () => {
       window.scrollTo({ top: scrollYBefore, behavior: 'instant' });
     });
   });
- 
+
 });
- 
+
 /* ============================================================
    HELPER: SHOW LOADING SPINNER
    Called while posts.json is being fetched.
@@ -385,17 +384,9 @@ function showLoading() {
     </div>`;
   loadMoreBtn.classList.add('hidden');
 }
- 
+
 /* ============================================================
    START EVERYTHING
    This is the entry point — runs when the page first loads.
    ============================================================ */
 loadProducts();
- 
-
-
-
-
-
-
-CollapseCollapse
