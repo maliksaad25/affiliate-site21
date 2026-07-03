@@ -1,4 +1,3 @@
-
 /* ============================================================
    script.js — All the interactive logic for TechNest
    This file does 3 main things:
@@ -24,11 +23,10 @@ let activeFilter  = 'All'; // Which filter button is selected
    These link our JavaScript to specific HTML elements.
    document.getElementById('someId') finds an element by its id="" attribute.
 */
-const grid          = document.getElementById('product-grid');
-const loadMoreBtn   = document.getElementById('load-more-btn');
-const countEl       = document.getElementById('product-count');
-const filterGroup   = document.getElementById('filter-group');
-const categoryGrid  = document.getElementById('category-grid'); // "Shop by Category" cards
+const grid        = document.getElementById('product-grid');
+const loadMoreBtn = document.getElementById('load-more-btn');
+const countEl     = document.getElementById('product-count');
+const filterGroup = document.getElementById('filter-group');
 
 /* ============================================================
    STEP 1: FETCH PRODUCTS FROM posts.json
@@ -51,9 +49,6 @@ async function loadProducts() {
 
     // Build the filter buttons from the categories in posts.json
     buildFilters();
-
-    // Build the "Shop by Category" cards from the categories in posts.json
-    buildCategoryShowcase();
 
     // Show all products (no filter applied yet)
     applyFilter('All');
@@ -97,95 +92,6 @@ function buildFilters() {
 }
 
 /* ============================================================
-   NEW: BUILD "SHOP BY CATEGORY" CARDS
-   Reads every category from posts.json, counts how many products
-   are in each one, and renders a clickable icon card for each.
-   Clicking a card reuses the existing applyFilter() function and
-   scrolls smoothly down to the product grid — no new filtering
-   logic, just a nicer visual entry point into it.
-   ============================================================ */
-function buildCategoryShowcase() {
-  if (!categoryGrid) return; // Safety check — section may not exist on every page
-
-  // Count how many products belong to each category
-  const counts = {};
-  allProducts.forEach(p => {
-    counts[p.category] = (counts[p.category] || 0) + 1;
-  });
-
-  // Sort categories by number of products (most popular first)
-  const sortedCategories = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
-
-  // "All Products" card first, then one card per category
-  const cardsHTML = [
-    `<button class="category-card active" data-category="All">
-       <span class="category-icon">🛍️</span>
-       <span class="category-name">All Products</span>
-       <span class="category-count">${allProducts.length}</span>
-     </button>`,
-    ...sortedCategories.map(cat => `
-      <button class="category-card" data-category="${cat}">
-        <span class="category-icon">${getCategoryIcon(cat)}</span>
-        <span class="category-name">${shortenCategoryName(cat)}</span>
-        <span class="category-count">${counts[cat]}</span>
-      </button>
-    `)
-  ].join('');
-
-  categoryGrid.innerHTML = cardsHTML;
-
-  // Clicking a card applies the existing filter and scrolls to the grid
-  categoryGrid.querySelectorAll('.category-card').forEach(card => {
-    card.addEventListener('click', () => {
-      applyFilter(card.dataset.category);
-      document.querySelector('.controls').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-}
-
-/* ============================================================
-   NEW: PICK AN ICON FOR A CATEGORY
-   Matches keywords in the category name to a relevant emoji icon.
-   Falls back to a generic icon if nothing matches.
-   ============================================================ */
-function getCategoryIcon(category) {
-  const c = category.toLowerCase();
-  const iconMap = [
-    [['watch', 'wearable'], '⌚'],
-    [['charger', 'power bank'], '🔋'],
-    [['light', 'lamp', 'ceiling', 'sconce'], '💡'],
-    [['fan'], '🌀'],
-    [['projector', 'theater', 'camera'], '🎥'],
-    [['kitchen', 'dining'], '🍽️'],
-    [['bath', 'bidet'], '🛁'],
-    [['network', 'travel tech', 'wifi'], '🌐'],
-    [['tool', 'industrial'], '🛠️'],
-    [['mount', 'stand', 'tablet', 'phone'], '📱'],
-    [['hub', 'controller', 'smart home'], '🏠'],
-    [['reptile', 'fogger'], '🦎'],
-    [['accessories'], '🎒'],
-  ];
-
-  for (const [keywords, icon] of iconMap) {
-    if (keywords.some(k => c.includes(k))) return icon;
-  }
-  return '✨'; // Default fallback icon
-}
-
-/* ============================================================
-   NEW: SHORTEN LONG CATEGORY NAMES FOR CARD DISPLAY
-   e.g. "Electronics / Tablet & Monitor Mounts" -> "Tablet & Monitor Mounts"
-   Only affects the visible label — filtering still uses the
-   original, unmodified category string from posts.json.
-   ============================================================ */
-function shortenCategoryName(category) {
-  if (category.includes('/')) {
-    return category.split('/').pop().trim();
-  }
-  return category;
-}
-
-/* ============================================================
    STEP 3: APPLY A FILTER
    Called when user clicks a filter button, or on first load.
    ============================================================ */
@@ -197,13 +103,6 @@ function applyFilter(category) {
   filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.category === category);
   });
-
-  // Keep the "Shop by Category" cards in sync with the active filter
-  if (categoryGrid) {
-    categoryGrid.querySelectorAll('.category-card').forEach(card => {
-      card.classList.toggle('active', card.dataset.category === category);
-    });
-  }
 
   // Filter the product list:
   // If "All" is selected, keep everything.
