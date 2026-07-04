@@ -87,8 +87,98 @@ function buildFilters() {
   filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       applyFilter(btn.dataset.category); // dataset.category reads the data-category attribute
+      // Keep category cards in sync when pill buttons are clicked
+      const cardGrid = document.getElementById('category-cards');
+      if (cardGrid) {
+        cardGrid.querySelectorAll('.category-card').forEach(c =>
+          c.classList.toggle('active', c.dataset.category === btn.dataset.category)
+        );
+      }
     });
   });
+
+  // Build the visual category cards section above the product grid
+  buildCategoryCards();
+}
+
+/* ============================================================
+   CATEGORY SHOWCASE CARDS
+   Called automatically at the end of buildFilters().
+   Builds visual category cards above the product grid.
+   Each card calls applyFilter() — the same function the pill
+   buttons use — so no existing functionality is affected.
+   ============================================================ */
+function buildCategoryCards() {
+  // Find the container div in index.html
+  const cardGrid = document.getElementById('category-cards');
+  if (!cardGrid) return; // Safety check — if div not found, stop
+
+  // Emoji icon lookup — maps each category name to an icon.
+  // Add more entries here as you add new categories to posts.json.
+  const ICONS = {
+    'All':         '🔍',
+    'Audio':       '🎧',
+    'Smart Home':  '🏠',
+    'Power':       '⚡',
+    'Travel':      '✈️',
+    'Gaming':      '🎮',
+    'Phone':       '📱',
+    'Tools':       '🔧',
+    'Lighting':    '💡',
+    'Cameras':     '📷',
+    'Wearables':   '⌚',
+    'Accessories': '🎒',
+    'Charging':    '🔋',
+    'Wireless':    '📡',
+    'Outdoor':     '🏕️',
+  };
+  const DEFAULT_ICON = '📦'; // Fallback for any category not listed above
+
+  // Get all unique categories from your posts.json products
+  const categories = ['All', ...new Set(allProducts.map(p => p.category))];
+
+  // Build one card per category
+  cardGrid.innerHTML = categories.map(cat => {
+    const icon  = ICONS[cat] || DEFAULT_ICON;
+    // Count how many products belong to each category
+    const count = cat === 'All'
+      ? allProducts.length
+      : allProducts.filter(p => p.category === cat).length;
+
+    return `
+      <button
+        class="category-card"
+        data-category="${cat}"
+        aria-label="Browse ${cat} products">
+        <span class="category-card-icon">${icon}</span>
+        <span class="category-card-name">${cat}</span>
+        <span class="category-card-count">${count} item${count !== 1 ? 's' : ''}</span>
+      </button>
+    `;
+  }).join('');
+
+  // Add click events — each card filters products AND scrolls to the grid
+  cardGrid.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', () => {
+      // Apply the filter (same function pill buttons use)
+      applyFilter(card.dataset.category);
+
+      // Update the active visual state on all cards
+      cardGrid.querySelectorAll('.category-card').forEach(c =>
+        c.classList.toggle('active', c.dataset.category === card.dataset.category)
+      );
+
+      // Smoothly scroll down to the product grid so the user sees results
+      document.getElementById('product-grid').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+  });
+
+  // Set "All" card as active by default on page load
+  const allCard = cardGrid.querySelector('[data-category="All"]');
+  if (allCard) allCard.classList.add('active');
 }
 
 /* ============================================================
