@@ -98,14 +98,14 @@ header {
    ============================================================ */
 .hero {
   text-align: center;
-  padding: 80px 24px 60px;
-  max-width: 700px;
+  padding: 96px 24px 64px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .hero-label {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -113,18 +113,18 @@ header {
   background: rgba(110, 231, 183, 0.1);
   border: 1px solid rgba(110, 231, 183, 0.25);
   border-radius: 100px;
-  padding: 5px 16px;
-  margin-bottom: 20px;
+  padding: 6px 18px;
+  margin-bottom: 26px;
 }
 
 .hero h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2rem, 5vw, 3.2rem); /* Scales with screen size */
+  font-size: clamp(2.3rem, 5.8vw, 3.8rem); /* Scales with screen size — now bigger */
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -1px;
+  line-height: 1.1;
+  letter-spacing: -1.2px;
   color: var(--text);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 /* The underlined/highlighted word in the heading */
@@ -133,12 +133,12 @@ header {
 }
 
 .hero p {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-muted);
-  max-width: 480px;
+  max-width: 540px;
   margin: 0 auto;
+  line-height: 1.7;
 }
-
 /* ============================================================
    MAIN CONTENT WRAPPER — Centers everything on large screens
    ============================================================ */
@@ -154,45 +154,10 @@ main {
 .controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;           /* Wraps on small screens */
-  gap: 16px;
-  margin-bottom: 36px;
-}
-
-/* Group of filter buttons */
-.filter-group {
-  display: flex;
-  gap: 8px;
+  justify-content: flex-end;  /* Right-aligns the product count now that filter buttons are gone */
   flex-wrap: wrap;
-}
-
-/* Individual filter button */
-.filter-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 7px 18px;
-  cursor: pointer;           /* Shows hand cursor on hover */
-  transition: all 0.2s;     /* Smooth animation on hover */
-}
-
-/* Hover state for filter button */
-.filter-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* Active/selected filter button */
-.filter-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0d0d0f;            /* Dark text on bright button */
-  font-weight: 600;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 /* Shows "X products found" text */
@@ -469,15 +434,11 @@ footer {
    ============================================================ */
 @media (max-width: 600px) {
   /* Tighter padding on mobile */
-  .hero { padding: 50px 20px 40px; }
+  .hero { padding: 60px 20px 44px; }
   main  { padding: 0 16px 48px; }
 
   /* Stack logo and tagline vertically */
   .header-inner { flex-direction: column; height: auto; padding: 14px 0; gap: 2px; }
-
-  /* Make filter buttons scroll horizontally */
-  .filter-group { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
-  .filter-btn   { flex-shrink: 0; }
 
   /* Slightly smaller cards */
   .card-title { font-size: 0.95rem; }
@@ -1044,4 +1005,100 @@ footer {
 .read-more-toggle:hover {
   background: var(--accent);
   color: #0d0d0f;
+}
+/* ============================================================
+   CATEGORIES NAV DROPDOWN
+   This is the new "Categories" menu in the top navigation bar.
+   It's hidden by default, and script.js adds the "open" class
+   to show it when the button is clicked.
+   ============================================================ */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-dropdown-arrow {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+/* Flip the little arrow upside down when the menu is open */
+.nav-dropdown.open .nav-dropdown-arrow {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+/* The menu box itself — invisible until "open" class is added */
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 220px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  z-index: 200;
+}
+
+/* When script.js adds the "open" class, the menu fades and slides into view */
+.nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Each category name inside the dropdown */
+.nav-dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-dropdown-item:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* The currently-selected category */
+.nav-dropdown-item.active {
+  color: var(--accent);
+  background: rgba(110, 231, 183, 0.1);
+  font-weight: 600;
+}
+
+/* On phones, keep the menu from running off the right edge of the screen */
+@media (max-width: 600px) {
+  .nav-dropdown-menu {
+    left: auto;
+    right: 0;
+    min-width: 190px;
+  }
 }
