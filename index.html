@@ -55,6 +55,24 @@
       <!-- Navigation links — right side of header -->
       <nav class="header-nav">
         <a href="index.html" class="nav-link active">Home</a>
+
+        <!-- Categories dropdown — items are filled in automatically by
+             script.js from the same category groups used for filtering.
+             Selecting an item applies that filter and scrolls to the grid. -->
+        <div class="nav-dropdown" id="categories-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="categories-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            Categories <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" id="categories-nav-menu" role="menu">
+            <!-- Category links inserted here automatically by script.js -->
+          </div>
+        </div>
+
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="privacy.html" class="nav-link">Privacy</a>
@@ -81,19 +99,14 @@
        ====================================================== -->
   <main>
 
-    <!-- Controls row: filter buttons + product count -->
+   <!-- Controls row: product count (filtering is now handled by the
+         Categories dropdown in the top navigation bar) -->
     <div class="controls">
-
-      <!-- Filter buttons are generated here automatically by script.js -->
-      <div class="filter-group" id="filter-group">
-        <!-- Buttons will appear here automatically -->
-      </div>
 
       <!-- Product count text (e.g. "9 products found") -->
       <p class="product-count" id="product-count"></p>
 
     </div>
-
     <!-- Product Grid: cards are inserted here by script.js -->
     <div class="product-grid" id="product-grid">
       <!-- Products will appear here automatically -->
