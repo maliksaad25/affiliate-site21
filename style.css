@@ -832,15 +832,15 @@ footer {
   padding: 4px 12px;
 }
 
-/* Product title on details page — bigger than card title */
+/* Product title on details page — the primary visual focus of the page */
 .detail-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
   font-weight: 700;
   color: var(--text);
-  line-height: 1.4;
-  letter-spacing: 0.2px;
-  max-width: 600px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  max-width: 620px;
   text-wrap: balance;
 }
 /* Description wrapper */
@@ -878,22 +878,87 @@ footer {
 
 /* Inner content styles */
 .desc-inner {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  line-height: 1.85;
+  font-size: 0.98rem;
+  color: #b6b6c3;          /* Lighter, easier-to-read gray than the site's default muted-gray text */
+  line-height: 1.8;
+  letter-spacing: 0.1px;
 }
 
+/* Paragraph spacing — the browser default gives none, so long
+   descriptions ran together with no visual breathing room */
+.desc-inner p {
+  margin: 0 0 14px;
+}
+
+.desc-inner p:last-child {
+  margin-bottom: 0;
+}
+
+/* Section headings like "Overview", "Features", "Specifications" —
+   now clearly separated from body text with their own weight,
+   spacing, and a subtle underline to mark each new section */
 .desc-inner h1, .desc-inner h2, .desc-inner h3 {
   color: var(--text);
-  font-family: 'Syne', sans-serif;
-  font-size: 1rem;
-  margin: 14px 0 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.desc-inner h1:first-child,
+.desc-inner h2:first-child,
+.desc-inner h3:first-child {
+  margin-top: 0;
+}
+
+/* Bulleted lists — the browser default bullets looked plain,
+   so we replace them with small accent-colored dots and add
+   comfortable spacing between each item */
+.desc-inner ul {
+  list-style: none;
+  margin: 12px 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.desc-inner ul li {
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.desc-inner ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.desc-inner ol {
+  margin: 12px 0 18px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.desc-inner ol li {
+  line-height: 1.7;
 }
 
 .desc-inner strong, .desc-inner b {
   color: var(--text);
+  font-weight: 600;
 }
-
 .desc-inner table {
   width: 100%;
   border-collapse: collapse;
@@ -917,22 +982,25 @@ footer {
 .detail-pricing {
   display: flex;
   align-items: baseline;
-  gap: 14px;
+  gap: 16px;
+  margin-top: 2px;
 }
 
 .detail-price {
-  font-family: 'Syne', sans-serif;
-  font-size: 2rem;
-  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--accent);
 }
 
 .detail-original-price {
   font-size: 1rem;
+  font-weight: 500;
   color: var(--text-muted);
   text-decoration: line-through;
+  opacity: 0.75;
 }
-
 .detail-discount {
   font-size: 0.85rem;
   font-weight: 700;
@@ -994,7 +1062,7 @@ footer {
   .product-detail-image {
     position: static; /* Remove sticky on mobile */
   }
-  .detail-price { font-size: 1.6rem; }
+ .detail-price { font-size: 1.5rem; }
 }
 /* Read More toggle button */
 
