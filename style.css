@@ -67,7 +67,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 68px;
+  height: 88px;
 }
 
 /* The logo / site name */
@@ -119,17 +119,22 @@ header {
 
 .hero h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.3rem, 5.8vw, 3.8rem); /* Scales with screen size — now bigger */
+  font-size: clamp(2.6rem, 7vw, 4.6rem); /* Bigger — matches the reference screenshot */
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -1.2px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--text);
   margin-bottom: 20px;
 }
 
-/* The underlined/highlighted word in the heading */
+/* The highlighted words — now a teal-to-blue gradient instead of flat green,
+   matching the reference screenshot */
 .hero h1 .highlight {
-  color: var(--accent);
+  background: linear-gradient(120deg, var(--accent), #7aa2ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent); /* fallback color for older browsers that can't do gradient text */
 }
 
 .hero p {
@@ -480,24 +485,32 @@ footer {
 */
 .header-nav {
   display: flex;
-  gap: 4px;
+  align-items: center;
+  gap: 30px;
 }
 
 .nav-link {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: #c2c2cf;
   text-decoration: none;
-  padding: 7px 14px;
-  border-radius: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
   transition: all 0.2s;
 }
 
-.nav-link:hover,
-.nav-link.active {
+/* Plain hover — just brightens the text, no background box */
+.nav-link:hover {
   color: var(--text);
-  background: var(--surface-2);
+}
+
+/* The active page ("Home") gets a filled pill-style highlight,
+   matching the reference screenshot */
+.nav-link.active {
+  color: var(--accent);
+  background: rgba(110, 231, 183, 0.14);
+  font-weight: 600;
 }
 
 /* --- DISCOUNT BADGE on card image (bottom-left) ---
