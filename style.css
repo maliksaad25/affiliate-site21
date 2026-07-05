@@ -1110,11 +1110,6 @@ footer {
 
 /* On phones, keep the menu from running off the right edge of the screen */
 @media (max-width: 600px) {
-  .nav-dropdown-menu {
-    left: auto;
-    right: 0;
-    min-width: 190px;
-   @media (max-width: 600px) {
   /* This is the key fix: on mobile, we remove .nav-dropdown as the
      "anchor point" for the menu. Without this, the menu positions
      itself against the small "Categories" button. By turning this
