@@ -9,7 +9,7 @@
    "Syne" for headings (bold, techy feel)
    "DM Sans" for body text (clean and readable)
 */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
 /* --- CSS VARIABLES (Your Color Palette & Settings) ---
    These are like "nicknames" for colors.
@@ -67,9 +67,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 88px;
+  height: 68px;
 }
-
 /* The logo / site name */
 .logo {
   font-family: 'Syne', sans-serif;
@@ -118,17 +117,16 @@ header {
 }
 
 .hero h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(2.6rem, 7vw, 4.6rem); /* Bigger — matches the reference screenshot */
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 3.9rem); /* Matches the reference screenshot's exact scale */
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--text);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-/* The highlighted words — now a teal-to-blue gradient instead of flat green,
-   matching the reference screenshot */
+/* The highlighted words — teal-to-blue gradient, matching the reference screenshot */
 .hero h1 .highlight {
   background: linear-gradient(120deg, var(--accent), #7aa2ff);
   -webkit-background-clip: text;
@@ -138,7 +136,7 @@ header {
 }
 
 .hero p {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--text-muted);
   max-width: 540px;
   margin: 0 auto;
@@ -486,30 +484,31 @@ footer {
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 4px;
 }
 
 .nav-link {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: #c2c2cf;
+  color: var(--text-muted);
   text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 10px;
-  transition: all 0.2s;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
 }
 
-/* Plain hover — just brightens the text, no background box */
+/* Hover — brightens the text and shows a soft neutral background */
 .nav-link:hover {
   color: var(--text);
+  background: var(--surface-2);
 }
 
-/* The active page ("Home") gets a filled pill-style highlight,
+/* The active page ("Home") gets a filled mint-green pill,
    matching the reference screenshot */
 .nav-link.active {
   color: var(--accent);
-  background: rgba(110, 231, 183, 0.14);
+  background: rgba(110, 231, 183, 0.08);
   font-weight: 600;
 }
 
