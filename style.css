@@ -779,12 +779,13 @@ footer {
 
 /* Left column — product image */
 .product-detail-image {
-  border-radius: 16px;
-  overflow: hidden;
+  border-radius: 18px;
+  overflow: hidden;         /* Keeps the zoomed image from spilling past the rounded corners */
   border: 1px solid var(--border);
   background: var(--surface-2);
   position: sticky;
   top: 90px; /* Sticks below the header while scrolling */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .product-detail-image img {
@@ -792,6 +793,11 @@ footer {
   height: auto;
   display: block;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-detail-image:hover img {
+  transform: scale(1.04);
 }
 
 /* Right column — all text and buttons */
@@ -878,9 +884,9 @@ footer {
 
 /* Inner content styles */
 .desc-inner {
-  font-size: 0.98rem;
-  color: #b6b6c3;          /* Lighter, easier-to-read gray than the site's default muted-gray text */
-  line-height: 1.8;
+  font-size: clamp(0.95rem, 1.6vw, 1.02rem);
+  color: #c7c7d4;          /* Brighter than before, while staying a step below main white text for hierarchy */
+  line-height: 1.85;
   letter-spacing: 0.1px;
 }
 
@@ -900,14 +906,13 @@ footer {
 .desc-inner h1, .desc-inner h2, .desc-inner h3 {
   color: var(--text);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.08rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  margin: 28px 0 12px;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: clamp(20px, 4vw, 28px) 0 12px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
-
 .desc-inner h1:first-child,
 .desc-inner h2:first-child,
 .desc-inner h3:first-child {
@@ -981,33 +986,36 @@ footer {
 /* Price row on details page */
 .detail-pricing {
   display: flex;
-  align-items: baseline;
-  gap: 16px;
-  margin-top: 2px;
+  align-items: center;
+  flex-wrap: wrap;         /* Lets the badge drop to its own line on very narrow screens instead of overflowing */
+  gap: 14px;
+  margin-top: 4px;
 }
 
 .detail-price {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.9rem;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--accent);
 }
 
 .detail-original-price {
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: var(--text-muted);
   text-decoration: line-through;
-  opacity: 0.75;
+  opacity: 0.55;
 }
 .detail-discount {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #fff;
-  background: #ef4444;
-  border-radius: 6px;
-  padding: 3px 10px;
+  letter-spacing: 0.02em;
+  color: var(--danger);
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 100px;
+  padding: 4px 12px;
 }
 
 /* The main Buy Now button on the details page */
@@ -1015,22 +1023,27 @@ footer {
   display: block;
   text-align: center;
   font-family: 'DM Sans', sans-serif;
-  font-size: 1.05rem;
+  font-size: clamp(0.98rem, 2vw, 1.05rem);
   font-weight: 700;
+  letter-spacing: 0.01em;
   color: #0d0d0f;
   background: var(--accent);
   border-radius: 12px;
-  padding: 16px 24px;
+  padding: 17px 26px;
   text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-  box-shadow: 0 4px 20px rgba(110, 231, 183, 0.25);
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 24px rgba(110, 231, 183, 0.3);
 }
 
 .detail-buy-btn:hover {
   background: var(--accent-dark);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(110, 231, 183, 0.4);
 }
 
+.detail-buy-btn:active {
+  transform: translateY(-1px);
+}
 /* Small notice below the Buy Now button */
 .detail-notice {
   font-size: 0.78rem;
@@ -1061,25 +1074,32 @@ footer {
   }
   .product-detail-image {
     position: static; /* Remove sticky on mobile */
-  }
- .detail-price { font-size: 1.5rem; }
 }
 /* Read More toggle button */
 
 .read-more-toggle {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
   color: var(--accent);
-  background: transparent;
-  border: 1.5px solid var(--accent);
-  border-radius: 8px;
-  padding: 8px 18px;
-  margin-top: 12px;
+  background: rgba(110, 231, 183, 0.06);
+  border: 1.5px solid rgba(110, 231, 183, 0.4);
+  border-radius: 10px;
+  padding: 11px 18px;
+  margin-top: 14px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.read-more-toggle:hover {
+  background: rgba(110, 231, 183, 0.14);
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .read-more-toggle:hover {
