@@ -1091,6 +1091,8 @@ footer {
   border-radius: 8px;
   padding: 9px 12px;
   cursor: pointer;
+  white-space: normal;      /* Lets long names like "Portable Chargers & Power Banks" wrap onto 2 lines */
+  word-break: break-word;   /* Extra safety net for any unusually long word */
   transition: background 0.2s, color 0.2s;
 }
 
@@ -1112,5 +1114,9 @@ footer {
     left: auto;
     right: 0;
     min-width: 190px;
+    max-width: calc(100vw - 32px);   /* Never wider than the screen, with a small margin on each side */
+    max-height: 65vh;                /* Limits height to 65% of the screen so it always fits vertically */
+    overflow-y: auto;                /* Adds a scrollbar inside the menu if the list is taller than max-height */
+    -webkit-overflow-scrolling: touch; /* Makes scrolling smooth and finger-friendly on iPhones */
   }
 }
