@@ -1114,9 +1114,21 @@ footer {
     left: auto;
     right: 0;
     min-width: 190px;
-    max-width: calc(100vw - 32px);   /* Never wider than the screen, with a small margin on each side */
-    max-height: 65vh;                /* Limits height to 65% of the screen so it always fits vertically */
-    overflow-y: auto;                /* Adds a scrollbar inside the menu if the list is taller than max-height */
+   @media (max-width: 600px) {
+  /* This is the key fix: on mobile, we remove .nav-dropdown as the
+     "anchor point" for the menu. Without this, the menu positions
+     itself against the small "Categories" button. By turning this
+     off, the menu instead anchors to the header itself (which spans
+     the full screen width), so it can never run off the left edge. */
+  .nav-dropdown {
+    position: static;
+  }
+
+  .nav-dropdown-menu {
+    left: 16px;                        /* 16px gap from the left edge of the screen */
+    right: 16px;                       /* 16px gap from the right edge of the screen */
+    max-height: 65vh;                  /* Limits height to 65% of the screen so it always fits vertically */
+    overflow-y: auto;                  /* Adds a scrollbar inside the menu if the list is taller than max-height */
     -webkit-overflow-scrolling: touch; /* Makes scrolling smooth and finger-friendly on iPhones */
   }
 }
