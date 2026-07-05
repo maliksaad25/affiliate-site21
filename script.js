@@ -26,8 +26,6 @@ let activeFilter  = 'All'; // Which filter button is selected
 const grid        = document.getElementById('product-grid');
 const loadMoreBtn = document.getElementById('load-more-btn');
 const countEl     = document.getElementById('product-count');
-const filterGroup = document.getElementById('filter-group');
-
 /* ============================================================
    STEP 1: FETCH PRODUCTS FROM posts.json
    This runs automatically when the page loads.
@@ -47,8 +45,8 @@ async function loadProducts() {
     // Convert the file contents into a JavaScript array
     allProducts = await response.json();
 
-    // Build the filter buttons from the categories in posts.json
-    buildFilters();
+    // Build the Categories dropdown in the top nav
+    buildCategoryDropdown();
 
     // Show all products (no filter applied yet)
     applyFilter('All');
@@ -66,43 +64,77 @@ async function loadProducts() {
 }
 
 /* ============================================================
-   STEP 2: BUILD FILTER BUTTONS AUTOMATICALLY
+   STEP 2: BUILD THE CATEGORIES DROPDOWN AUTOMATICALLY
    This reads the "category" field from each product in posts.json
-   and creates a button for each unique category.
+   and creates one item in the dropdown menu for each unique category.
+   It also makes the "Categories" button open and close the menu.
    ============================================================ */
-function buildFilters() {
+function buildCategoryDropdown() {
+  // Find the button, the wrapper, and the empty menu box in index.html
+  const toggle   = document.getElementById('categories-nav-toggle');
+  const dropdown = document.getElementById('categories-nav-dropdown');
+  const menu     = document.getElementById('categories-nav-menu');
+  if (!toggle || !dropdown || !menu) return; // Safety check — stop if not found
+
   // Extract all category values and remove duplicates using Set
   const categories = ['All', ...new Set(allProducts.map(p => p.category))];
 
-  // Build the HTML for each filter button
-  filterGroup.innerHTML = categories.map(cat => `
+  // Build the HTML for each item inside the dropdown menu
+  menu.innerHTML = categories.map(cat => `
     <button
-      class="filter-btn ${cat === 'All' ? 'active' : ''}"
+      class="nav-dropdown-item ${cat === 'All' ? 'active' : ''}"
       data-category="${cat}">
       ${cat}
     </button>
   `).join('');
 
-  // Add a click event to each button
-  filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      applyFilter(btn.dataset.category); // dataset.category reads the data-category attribute
+  // Clicking the "Categories" button opens or closes the menu
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // Stops the click from immediately closing the menu again
+    const isOpen = dropdown.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // Clicking a category inside the menu applies the filter
+  menu.querySelectorAll('.nav-dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      applyFilter(item.dataset.category); // dataset.category reads the data-category attribute
+
+      // Close the menu after picking a category
+      dropdown.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+
+      // Scroll down so the user immediately sees the filtered products
+      document.getElementById('product-grid').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     });
   });
-}
 
+  // Close the menu if the user clicks anywhere else on the page
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
 /* ============================================================
    STEP 3: APPLY A FILTER
-   Called when user clicks a filter button, or on first load.
+   Called when user clicks a category in the dropdown, or on first load.
    ============================================================ */
 function applyFilter(category) {
   activeFilter = category;
   currentPage  = 1; // Reset to first page whenever filter changes
 
-  // Update which button looks "active" (highlighted)
-  filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.category === category);
-  });
+  // Update which dropdown item looks "active" (highlighted)
+  const menu = document.getElementById('categories-nav-menu');
+  if (menu) {
+    menu.querySelectorAll('.nav-dropdown-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.category === category);
+    });
+  }
 
   // Filter the product list:
   // If "All" is selected, keep everything.
