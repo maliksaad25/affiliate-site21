@@ -1068,6 +1068,9 @@ footer {
   transform: translateY(-8px);
   transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
   z-index: 200;
+  max-height: 75vh;       /* Stops the menu from growing past 75% of the screen height */
+  overflow-y: auto;       /* Adds a scrollbar inside the menu once content is taller than max-height */
+  -webkit-overflow-scrolling: touch; /* Smooth, natural scrolling feel on trackpads/touch trackpads */
 }
 
 /* When script.js adds the "open" class, the menu fades and slides into view */
