@@ -29,8 +29,24 @@
   <header>
     <div class="header-inner">
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
-      <nav class="header-nav">
+     <nav class="header-nav">
         <a href="index.html" class="nav-link">Home</a>
+
+        <!-- Categories dropdown — same as Home page -->
+        <div class="nav-dropdown" id="categories-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="categories-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            Categories <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" id="categories-nav-menu" role="menu">
+            <!-- Category links inserted here automatically by script.js -->
+          </div>
+        </div>
+
         <a href="about.html" class="nav-link active">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="privacy.html" class="nav-link">Privacy</a>
