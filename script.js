@@ -45,21 +45,27 @@ async function loadProducts() {
     // Convert the file contents into a JavaScript array
     allProducts = await response.json();
 
-    // Build the Categories dropdown in the top nav
+   // Build the Categories dropdown in the top nav
     buildCategoryDropdown();
 
-    // Show all products (no filter applied yet)
-    applyFilter('All');
+    // If we arrived here by clicking a category from another page
+    // (About/Contact/Privacy), the link will look like index.html?category=Smart+Home
+    // — read it and apply that filter. Otherwise, show all products.
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedCategory = urlParams.get('category');
+    applyFilter(requestedCategory || 'All');
 
-  } catch (error) {
-    // If something went wrong, show an error message
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="emoji">⚠️</div>
-        <p>Could not load products. Make sure posts.json is in the same folder as index.html.</p>
-        <p style="margin-top:8px;font-size:0.8rem;">Error: ${error.message}</p>
-      </div>`;
-    loadMoreBtn.classList.add('hidden');
+ } catch (error) {
+    // If something went wrong, show an error message (only if there's a grid to show it in)
+    if (grid) {
+      grid.innerHTML = `
+        <div class="empty-state">
+          <div class="emoji">⚠️</div>
+          <p>Could not load products. Make sure posts.json is in the same folder as index.html.</p>
+          <p style="margin-top:8px;font-size:0.8rem;">Error: ${error.message}</p>
+        </div>`;
+      loadMoreBtn.classList.add('hidden');
+    }
   }
 }
 
@@ -95,20 +101,24 @@ function buildCategoryDropdown() {
     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 
-  // Clicking a category inside the menu applies the filter
+ // Clicking a category inside the menu applies the filter
   menu.querySelectorAll('.nav-dropdown-item').forEach(item => {
     item.addEventListener('click', () => {
-      applyFilter(item.dataset.category); // dataset.category reads the data-category attribute
+      const chosenCategory = item.dataset.category; // dataset.category reads the data-category attribute
 
       // Close the menu after picking a category
       dropdown.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
 
-      // Scroll down so the user immediately sees the filtered products
-      document.getElementById('product-grid').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      if (grid) {
+        // We're already on the Home page — filter right here and scroll to it
+        applyFilter(chosenCategory);
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // We're on About/Contact/Privacy — there's no grid here,
+        // so send the user to Home with this category already selected
+        window.location.href = 'index.html?category=' + encodeURIComponent(chosenCategory);
+      }
     });
   });
 
@@ -153,8 +163,8 @@ function applyFilter(category) {
    clearGrid = false means we ADD to existing cards (used by Load More)
    ============================================================ */
 function renderProducts(clearGrid = false) {
+  if (!grid) return; // No product grid on this page — nothing to render
   if (clearGrid) grid.innerHTML = '';
-
   // Figure out which products to show on this "page"
   const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const end   = start + PRODUCTS_PER_PAGE;
@@ -284,30 +294,33 @@ function createCard(product, index) {
    4. Silently restore the saved scroll position
    Result: page stays exactly where the user was — no jump.
    ============================================================ */
-loadMoreBtn.addEventListener('click', () => {
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener('click', () => {
 
-  // Step 1 — Lock scroll position before anything changes
-  const scrollYBefore = window.scrollY;
+    // Step 1 — Lock scroll position before anything changes
+    const scrollYBefore = window.scrollY;
 
-  // Step 2 — Load the next page of products
-  currentPage++;
-  renderProducts(false); // false = add cards, don't clear existing ones
+    // Step 2 — Load the next page of products
+    currentPage++;
+    renderProducts(false); // false = add cards, don't clear existing ones
 
-  // Step 3 — After browser paints new cards, silently restore position
-  // Double requestAnimationFrame ensures the DOM has fully updated
-  requestAnimationFrame(() => {
+    // Step 3 — After browser paints new cards, silently restore position
+    // Double requestAnimationFrame ensures the DOM has fully updated
     requestAnimationFrame(() => {
-      window.scrollTo({ top: scrollYBefore, behavior: 'instant' });
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollYBefore, behavior: 'instant' });
+      });
     });
-  });
 
-});
+  });
+}
 
 /* ============================================================
    HELPER: SHOW LOADING SPINNER
    Called while posts.json is being fetched.
    ============================================================ */
 function showLoading() {
+  if (!grid) return; // No product grid on this page — nothing to show a spinner in
   grid.innerHTML = `
     <div class="loading">
       <div class="spinner"></div>
