@@ -45,27 +45,27 @@ async function loadProducts() {
     // Convert the file contents into a JavaScript array
     allProducts = await response.json();
 
-   // Build the Categories dropdown in the top nav
+    // Build the Categories dropdown in the top nav
     buildCategoryDropdown();
 
-    // If we arrived here by clicking a category from another page
-    // (About/Contact/Privacy), the link will look like index.html?category=Smart+Home
-    // — read it and apply that filter. Otherwise, show all products.
-    const urlParams = new URLSearchParams(window.location.search);
-    const requestedCategory = urlParams.get('category');
-    applyFilter(requestedCategory || 'All');
+    // If the user came from another page's Categories dropdown
+    // (e.g. About/Contact/Privacy), the URL will look like
+    // index.html?category=Smart+Home — apply that filter.
+    // Otherwise, show all products (no filter applied yet).
+    const params = new URLSearchParams(window.location.search);
+    const urlCategory = params.get('category');
+    const categoryExists = urlCategory && allProducts.some(p => p.category === urlCategory);
+    applyFilter(categoryExists ? urlCategory : 'All');
 
- } catch (error) {
-    // If something went wrong, show an error message (only if there's a grid to show it in)
-    if (grid) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <div class="emoji">⚠️</div>
-          <p>Could not load products. Make sure posts.json is in the same folder as index.html.</p>
-          <p style="margin-top:8px;font-size:0.8rem;">Error: ${error.message}</p>
-        </div>`;
-      loadMoreBtn.classList.add('hidden');
-    }
+  } catch (error) {
+    // If something went wrong, show an error message
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="emoji">⚠️</div>
+        <p>Could not load products. Make sure posts.json is in the same folder as index.html.</p>
+        <p style="margin-top:8px;font-size:0.8rem;">Error: ${error.message}</p>
+      </div>`;
+    loadMoreBtn.classList.add('hidden');
   }
 }
 
@@ -101,23 +101,28 @@ function buildCategoryDropdown() {
     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 
- // Clicking a category inside the menu applies the filter
+  // Clicking a category inside the menu applies the filter
   menu.querySelectorAll('.nav-dropdown-item').forEach(item => {
     item.addEventListener('click', () => {
-      const chosenCategory = item.dataset.category; // dataset.category reads the data-category attribute
-
-      // Close the menu after picking a category
-      dropdown.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      const category = item.dataset.category; // reads the data-category attribute
 
       if (grid) {
-        // We're already on the Home page — filter right here and scroll to it
-        applyFilter(chosenCategory);
-        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // We're on the Home page — filter right here on the page
+        applyFilter(category);
+
+        // Close the menu after picking a category
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+
+        // Scroll down so the user immediately sees the filtered products
+        document.getElementById('product-grid').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       } else {
-        // We're on About/Contact/Privacy — there's no grid here,
-        // so send the user to Home with this category already selected
-        window.location.href = 'index.html?category=' + encodeURIComponent(chosenCategory);
+        // We're on About/Contact/Privacy — there's no grid here, so send
+        // the user to the Home page already filtered to this category.
+        window.location.href = `index.html?category=${encodeURIComponent(category)}`;
       }
     });
   });
@@ -163,8 +168,8 @@ function applyFilter(category) {
    clearGrid = false means we ADD to existing cards (used by Load More)
    ============================================================ */
 function renderProducts(clearGrid = false) {
-  if (!grid) return; // No product grid on this page — nothing to render
   if (clearGrid) grid.innerHTML = '';
+
   // Figure out which products to show on this "page"
   const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const end   = start + PRODUCTS_PER_PAGE;
@@ -294,6 +299,8 @@ function createCard(product, index) {
    4. Silently restore the saved scroll position
    Result: page stays exactly where the user was — no jump.
    ============================================================ */
+// Only Home page has this button, so check it exists first
+// (About/Contact/Privacy don't have a product grid or Load More button)
 if (loadMoreBtn) {
   loadMoreBtn.addEventListener('click', () => {
 
@@ -320,7 +327,7 @@ if (loadMoreBtn) {
    Called while posts.json is being fetched.
    ============================================================ */
 function showLoading() {
-  if (!grid) return; // No product grid on this page — nothing to show a spinner in
+  if (!grid) return; // Safety check — no grid on About/Contact/Privacy pages
   grid.innerHTML = `
     <div class="loading">
       <div class="spinner"></div>
@@ -332,5 +339,29 @@ function showLoading() {
 /* ============================================================
    START EVERYTHING
    This is the entry point — runs when the page first loads.
+
+   The product grid (with cards, filtering, Load More) only exists
+   on the Home page (#product-grid is only in index.html).
+   About/Contact/Privacy don't have that grid, but they DO have the
+   Categories dropdown in the header — so on those pages we still
+   fetch posts.json just to build the dropdown, without touching
+   any grid-related code.
    ============================================================ */
-loadProducts();
+if (grid) {
+  loadProducts();
+} else {
+  buildCategoryDropdownOnly();
+}
+
+async function buildCategoryDropdownOnly() {
+  try {
+    const response = await fetch('./posts.json');
+    if (!response.ok) throw new Error('Could not load posts.json');
+    allProducts = await response.json();
+    buildCategoryDropdown();
+  } catch (error) {
+    // If this fails, the Categories dropdown just won't have items —
+    // it won't break the rest of the page.
+    console.error('Could not build Categories dropdown:', error);
+  }
+}
