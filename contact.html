@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Contact TechNest — Questions & Product Suggestions</title>
-<meta name="description" content="Have a question, feedback, or a product suggestion for TechNest? Get in touch with our team — we typically reply within 24-48 hours.">
+  <title>Contact — TechNest</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,6 +17,23 @@
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
       <nav class="header-nav">
         <a href="index.html" class="nav-link">Home</a>
+
+        <!-- Categories dropdown — items are filled in automatically by
+             script.js from the same category groups used for filtering. -->
+        <div class="nav-dropdown" id="categories-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="categories-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            Categories <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" id="categories-nav-menu" role="menu">
+            <!-- Category links inserted here automatically by script.js -->
+          </div>
+        </div>
+
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link active">Contact</a>
         <a href="privacy.html" class="nav-link">Privacy</a>
@@ -85,5 +101,6 @@
     </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
