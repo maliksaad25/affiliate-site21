@@ -97,7 +97,7 @@ header {
    ============================================================ */
 .hero {
   text-align: center;
-  padding: 96px 24px 64px;
+  padding: 56px 24px 32px;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -437,7 +437,7 @@ footer {
    ============================================================ */
 @media (max-width: 600px) {
   /* Tighter padding on mobile */
-  .hero { padding: 60px 20px 44px; }
+  .hero {padding:36px 20px 20px; }
   main  { padding: 0 16px 48px; }
 
   /* Stack logo and tagline vertically */
