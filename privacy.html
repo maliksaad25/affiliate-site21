@@ -12,8 +12,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Privacy Policy — TechNest</title>
-<meta name="description" content="Read the TechNest privacy policy to learn how we collect, use, and protect your information when you visit our tech gadget affiliate site.">
+  <title>Privacy Policy — TechNest</title>
   <link rel="stylesheet" href="style.css">
   <!-- Favicon — shows the icon in browser tabs -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -31,6 +30,23 @@
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
       <nav class="header-nav">
         <a href="index.html" class="nav-link">Home</a>
+
+        <!-- Categories dropdown — items are filled in automatically by
+             script.js from the same category groups used for filtering. -->
+        <div class="nav-dropdown" id="categories-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="categories-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            Categories <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" id="categories-nav-menu" role="menu">
+            <!-- Category links inserted here automatically by script.js -->
+          </div>
+        </div>
+
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="privacy.html" class="nav-link active">Privacy</a>
@@ -40,7 +56,7 @@
 
   <div class="page-wrap">
     <h1 class="page-title">Privacy Policy</h1>
-    <p class="page-subtitle">Last updated: July 2026</p>
+    <p class="page-subtitle">Last updated: January 2025</p>
 
     <div class="page-section">
       <h2>1. Affiliate Disclosure</h2>
@@ -82,5 +98,6 @@
     </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
