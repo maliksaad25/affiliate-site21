@@ -1198,3 +1198,216 @@ footer {
     -webkit-overflow-scrolling: touch; /* Makes scrolling smooth and finger-friendly on iPhones */
   }
 }
+
+/* ============================================================
+   HEADER SEARCH BOX
+   Reuses the existing ".nav-dropdown" + ".nav-link.nav-dropdown-toggle"
+   pattern from the Categories menu above, so the toggle button already
+   looks correct with zero extra CSS. Only the panel and input below are
+   new. On mobile, ".nav-dropdown { position: static; }" from the rule
+   above already applies here too (same class), which is what lets the
+   mobile override anchor the panel to the header instead of the button.
+   ============================================================ */
+
+/* Small magnifying-glass icon inside the toggle button */
+.nav-search-icon {
+  display: inline-block;
+  vertical-align: -2px;
+}
+
+/* The dropdown panel that holds the search input.
+   Anchored to the right edge since Search is the last item in the nav
+   (mirrors .nav-dropdown-menu, which anchors left since Categories
+   sits near the start of the nav). */
+.nav-search-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  z-index: 200;
+}
+
+/* Fades and slides the panel into view, same as the Categories menu */
+.nav-dropdown.open .nav-search-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* The search input itself — styled like the inputs on the Contact form
+   so it matches the rest of the site. */
+.nav-search-input {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.nav-search-input:focus {
+  border-color: var(--accent);
+}
+
+/* On phones, keep the panel from running off the edge of the screen
+   (same fix already used for the Categories menu at this breakpoint) */
+@media (max-width: 600px) {
+  .nav-search-panel {
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+
+  /* Keep just the icon on small screens so the nav row stays compact */
+  .nav-search-label {
+    display: none;
+  }
+}
+
+/* ============================================================
+   HERO SEARCH BAR — Big search input + Categories dropdown,
+   sitting directly below the hero heading. One continuous
+   rounded bar (search on the left, dropdown on the right,
+   thin divider between) so it reads as a single control, matching
+   the dark surface/border/shadow already used across the site.
+   ============================================================ */
+.hero-search {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+}
+
+.hero-search-bar {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px rgba(110, 231, 183, 0.12), var(--shadow);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Subtle accent glow when either control inside is focused */
+.hero-search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(110, 231, 183, 0.15);
+}
+
+/* --- Search side (left, ~78%) --- */
+.hero-search-box {
+  flex: 3 1 78%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  min-width: 0;
+}
+
+.hero-search-icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.hero-search-input {
+  flex: 1;
+  min-width: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.hero-search-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Thin vertical line separating search from the dropdown */
+.hero-search-divider {
+  width: 1px;
+  background: var(--border);
+  margin: 10px 0;
+  flex-shrink: 0;
+}
+
+/* --- Categories side (right, ~22%) --- */
+.hero-category-box {
+  flex: 1 1 22%;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+}
+
+/* A native <select> styled to match the search input's height,
+   padding, radius area, and colors — with a custom chevron icon
+   since browsers don't let us style the default arrow directly. */
+.hero-category-select {
+  width: 100%;
+  height: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 16px 36px 16px 18px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888899' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  transition: background-color 0.2s;
+}
+
+/* Same hover feel as the rest of the site's interactive controls */
+.hero-category-select:hover,
+.hero-category-select:focus {
+  background-color: var(--surface-2);
+}
+
+.hero-category-select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Stack vertically on mobile, as required */
+@media (max-width: 700px) {
+  .hero-search-bar {
+    flex-direction: column;
+  }
+
+  .hero-search-divider {
+    width: auto;
+    height: 1px;
+    margin: 0 16px;
+  }
+
+  .hero-category-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .hero-search {
+    padding: 0 20px;
+    margin-bottom: 32px;
+  }
+}
