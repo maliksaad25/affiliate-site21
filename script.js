@@ -18,6 +18,8 @@ let allProducts   = [];    // Every product loaded from posts.json
 let filtered      = [];    // Products after a filter is applied
 let currentPage   = 1;     // Which "page" of results we're on
 let activeFilter  = 'All'; // Which filter button is selected
+let searchTerm    = '';    // Current search text, lowercased (empty = no search)
+let searchDisplay = '';    // Same search text, original casing — only used for the "No products found" message
 
 /* --- DOM REFERENCES ---
    These link our JavaScript to specific HTML elements.
@@ -45,8 +47,17 @@ async function loadProducts() {
     // Convert the file contents into a JavaScript array
     allProducts = await response.json();
 
-    // Build the Categories dropdown in the top nav
+    // Pre-compute a lowercased "title + description" string for every
+    // product, once, right after loading. Live search then just checks
+    // this one string instead of re-processing the description HTML on
+    // every keystroke — keeps typing instant even with hundreds/thousands
+    // of products.
+    buildSearchIndex();
+
+    // Build the Categories dropdown in the top nav, and the matching
+    // one in the hero search bar
     buildCategoryDropdown();
+    buildHeroCategorySelect();
 
     // If the user came from another page's Categories dropdown
     // (e.g. About/Contact/Privacy), the URL will look like
@@ -55,6 +66,20 @@ async function loadProducts() {
     const params = new URLSearchParams(window.location.search);
     const urlCategory = params.get('category');
     const categoryExists = urlCategory && allProducts.some(p => p.category === urlCategory);
+
+    // Likewise, if the user searched from the header on another page,
+    // the URL will look like index.html?search=headphones — restore that
+    // search term into both search boxes and apply it.
+    const urlSearch = params.get('search');
+    if (urlSearch) {
+      searchDisplay = urlSearch;
+      searchTerm = urlSearch.trim().toLowerCase();
+      const navInput  = document.getElementById('nav-search-input');
+      const heroInput = document.getElementById('hero-search-input');
+      if (navInput)  navInput.value  = urlSearch;
+      if (heroInput) heroInput.value = urlSearch;
+    }
+
     applyFilter(categoryExists ? urlCategory : 'All');
 
   } catch (error) {
@@ -135,6 +160,22 @@ function buildCategoryDropdown() {
     }
   });
 }
+
+/* ============================================================
+   BUILD THE HERO CATEGORIES DROPDOWN (native <select>)
+   Same category list as the header's Categories menu, just filled
+   into the <select> that sits in the hero search bar on the Home page.
+   ============================================================ */
+function buildHeroCategorySelect() {
+  const select = document.getElementById('hero-category-select');
+  if (!select) return; // Only exists on the Home page
+
+  const categories = ['All', ...new Set(allProducts.map(p => p.category))];
+
+  select.innerHTML = categories.map(cat =>
+    `<option value="${cat}">${cat === 'All' ? 'All Categories' : cat}</option>`
+  ).join('');
+}
 /* ============================================================
    STEP 3: APPLY A FILTER
    Called when user clicks a category in the dropdown, or on first load.
@@ -143,7 +184,8 @@ function applyFilter(category) {
   activeFilter = category;
   currentPage  = 1; // Reset to first page whenever filter changes
 
-  // Update which dropdown item looks "active" (highlighted)
+  // Update which dropdown item looks "active" (highlighted) in the
+  // header Categories menu
   const menu = document.getElementById('categories-nav-menu');
   if (menu) {
     menu.querySelectorAll('.nav-dropdown-item').forEach(item => {
@@ -151,15 +193,158 @@ function applyFilter(category) {
     });
   }
 
-  // Filter the product list:
-  // If "All" is selected, keep everything.
-  // Otherwise, keep only products matching the selected category.
-  filtered = (category === 'All')
-    ? allProducts
-    : allProducts.filter(p => p.category === category);
+  // Keep the hero Categories dropdown showing the same selection
+  const heroSelect = document.getElementById('hero-category-select');
+  if (heroSelect && heroSelect.value !== category) heroSelect.value = category;
+
+  // Recompute the visible product list (category + any active search term)
+  filtered = computeFiltered();
 
   // Render (draw) the cards on screen
   renderProducts(true); // true = clear the grid first
+}
+
+/* ============================================================
+   COMBINE CATEGORY FILTER + SEARCH TERM
+   Both the Categories dropdown and the Search box narrow down the
+   same underlying list, so a product must match BOTH the selected
+   category (or "All") AND the current search text (or no search)
+   to be shown. This keeps the two features working together instead
+   of one silently overriding the other.
+   ============================================================ */
+function computeFiltered() {
+  return allProducts.filter(p => {
+    const matchesCategory = activeFilter === 'All' || p.category === activeFilter;
+    const matchesSearch   = !searchTerm || (p._searchIndex && p._searchIndex.includes(searchTerm));
+    return matchesCategory && matchesSearch;
+  });
+}
+
+/* ============================================================
+   BUILD SEARCH INDEX
+   Runs once, right after posts.json loads. Strips HTML tags out of
+   each description and combines it with the title into one lowercased
+   string per product (p._searchIndex), so every keystroke in the
+   search box is a single, cheap .includes() check per product instead
+   of re-parsing HTML each time.
+   ============================================================ */
+function buildSearchIndex() {
+  allProducts.forEach(p => {
+    const plainDescription = (p.description || '').replace(/<[^>]*>/g, ' ');
+    p._searchIndex = (p.title + ' ' + plainDescription).toLowerCase();
+  });
+}
+
+/* ============================================================
+   HANDLE SEARCH INPUT
+   Called every time the user types in EITHER search box — the
+   header one or the new hero one (only relevant on pages that
+   have the product grid). Keeps both boxes showing the same text.
+   ============================================================ */
+function handleSearch(value) {
+  searchDisplay = value;
+  searchTerm    = value.trim().toLowerCase();
+  currentPage   = 1;
+
+  // Keep both search boxes (header dropdown + hero bar) in sync
+  const navInput  = document.getElementById('nav-search-input');
+  const heroInput = document.getElementById('hero-search-input');
+  if (navInput  && navInput.value  !== value) navInput.value  = value;
+  if (heroInput && heroInput.value !== value) heroInput.value = value;
+
+  filtered      = computeFiltered();
+  renderProducts(true);
+}
+
+/* ============================================================
+   ESCAPE HTML
+   Small safety helper so the search term the user typed can be
+   shown back inside the "No products found" message without any
+   risk of it being interpreted as HTML.
+   ============================================================ */
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ============================================================
+   SEARCH DROPDOWN (header)
+   Opens/closes the search panel using the exact same pattern as the
+   Categories dropdown above, and wires up live search + Enter-to-jump
+   behaviour. This runs on every page (the search box is in the shared
+   header), even pages with no product grid.
+   ============================================================ */
+function setupSearchDropdown() {
+  const toggle   = document.getElementById('search-nav-toggle');
+  const dropdown = document.getElementById('search-nav-dropdown');
+  const input    = document.getElementById('nav-search-input');
+  if (!toggle || !dropdown || !input) return; // Safety check
+
+  // Open/close the panel
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = dropdown.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    if (isOpen) input.focus();
+  });
+
+  // Close the panel if the user clicks anywhere else on the page
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Live search: update results as the user types, with a short debounce
+  // (120ms) so fast typing doesn't re-filter on every single keystroke —
+  // keeps things smooth even with a large product catalog.
+  let debounceTimer;
+  input.addEventListener('input', () => {
+    if (!grid) return; // No product grid on this page — nothing to filter live
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => handleSearch(input.value), 120);
+  });
+
+  // Pressing Enter on a page with no product grid (About/Contact/Privacy/
+  // product page) jumps to the Home page with the search already applied.
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (grid) return; // Already filtering live on this page — nothing more to do
+    const value = input.value.trim();
+    if (value) {
+      window.location.href = `index.html?search=${encodeURIComponent(value)}`;
+    }
+  });
+}
+
+/* ============================================================
+   HERO SEARCH BAR (Home page only)
+   Wires up the big search input + Categories dropdown that sit
+   directly below the hero heading. Both just feed into the same
+   handleSearch() / applyFilter() functions the header controls use,
+   so results stay in sync no matter which box the visitor types in.
+   ============================================================ */
+function setupHeroSearch() {
+  const heroInput  = document.getElementById('hero-search-input');
+  const heroSelect = document.getElementById('hero-category-select');
+
+  // Live search, same short debounce as the header search box
+  if (heroInput) {
+    let debounceTimer;
+    heroInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => handleSearch(heroInput.value), 120);
+    });
+  }
+
+  // Picking a category applies it exactly like the header dropdown does
+  if (heroSelect) {
+    heroSelect.addEventListener('change', () => {
+      applyFilter(heroSelect.value);
+    });
+  }
 }
 
 /* ============================================================
@@ -180,10 +365,13 @@ function renderProducts(clearGrid = false) {
 
   // If there are no products to show, display empty state
   if (filtered.length === 0) {
+    const message = searchTerm
+      ? `No products found for "${escapeHTML(searchDisplay.trim())}".`
+      : 'No products found in this category.';
     grid.innerHTML = `
       <div class="empty-state">
         <div class="emoji">🔍</div>
-        <p>No products found in this category.</p>
+        <p>${message}</p>
       </div>`;
     loadMoreBtn.classList.add('hidden');
     return;
@@ -347,6 +535,15 @@ function showLoading() {
    fetch posts.json just to build the dropdown, without touching
    any grid-related code.
    ============================================================ */
+// Search box lives in the shared header, so it's wired up on every page —
+// including ones with no product grid (About/Contact/Privacy/product page),
+// where it just jumps to the Home page with the search applied.
+setupSearchDropdown();
+
+// The hero search bar only exists on the Home page (elements are null
+// everywhere else, and setupHeroSearch() safely no-ops in that case).
+setupHeroSearch();
+
 if (grid) {
   loadProducts();
 } else {
