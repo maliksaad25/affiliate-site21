@@ -22,6 +22,35 @@
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="privacy.html" class="nav-link">Privacy</a>
+
+        <!-- Search — same open/close pattern as the Categories dropdown
+             above (button + absolutely-positioned panel), so it matches
+             the existing look and feel. Typing filters products live on
+             the Home page; on other pages, pressing Enter opens the Home
+             page with that search already applied. Wiring lives in
+             script.js (setupSearchDropdown / handleSearch). -->
+        <div class="nav-dropdown nav-search" id="search-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="search-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-label="Search products">
+            <svg class="nav-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span class="nav-search-label">Search</span>
+          </button>
+          <div class="nav-search-panel" id="search-nav-panel">
+            <input
+              type="search"
+              id="nav-search-input"
+              class="nav-search-input"
+              placeholder="Search products…"
+              aria-label="Search products"
+              autocomplete="off"
+              enterkeyhint="search">
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -48,6 +77,10 @@
       <p class="footer-copy">© 2025 TechNest. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- script.js wires up the header Search box (this page has no
+       product grid, so script.js only handles the search redirect). -->
+  <script src="script.js"></script>
 
 </body>
 </html>
