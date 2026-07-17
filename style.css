@@ -766,24 +766,22 @@ footer {
 }
 
 /* Hide the Privacy Policy link from the MOBILE top navigation only.
-   Scoped to ".header-nav" so it does NOT touch the footer's own
-   Privacy Policy link (.footer-nav), which stays visible everywhere,
-   and does not touch desktop since it only exists inside this
-   media query.
+   The link now carries its own class, ".nav-privacy-link", added
+   only to the copy inside <nav class="header-nav">. The footer's
+   Privacy Policy link has no such class, so it is never touched and
+   stays visible everywhere. Desktop is untouched because this rule
+   only exists inside this media query.
 
-   This used to live inside the "max-width: 600px" block above, and
-   the selector itself was already correct (it matches the real
-   markup — a[href="privacy.html"] inside .header-nav — on every
-   page). The reason the link kept showing on real phones is the
-   breakpoint, not the selector: 600px is narrower than a lot of
-   phones report in CSS pixels once you factor in landscape
-   orientation, larger "phablet"-class phones, and OS-level display
-   scaling — plenty of real devices land in the 601–768px range and
-   never matched the old rule. 768px is the standard phone/small-
-   tablet cutoff, so this reliably covers the devices the 600px
-   version was missing. */
+   WHY THE OLD RULE FAILED: it matched on a[href="privacy.html"].
+   That looked right in the source files, but Netlify's "Pretty
+   URLs" post-processing rewrites internal links when it deploys the
+   site, so the live page actually ships href="/privacy" instead of
+   href="privacy.html". The browser never saw the exact string the
+   CSS was looking for, so the rule silently matched nothing. A
+   class name is not something Netlify rewrites, so targeting the
+   class instead of the href makes this fix deploy-proof. */
 @media (max-width: 768px) {
-  .header-nav a[href="privacy.html"] {
+  .nav-privacy-link {
     display: none;
   }
 }
