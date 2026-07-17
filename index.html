@@ -33,6 +33,21 @@
   <!-- Tab title and SEO description -->
   <title>TechNest — Best Tech Gadgets & Smart Home Deals</title>
   <meta name="description" content="Discover handpicked tech gadgets at TechNest — smart home devices, wearables, power banks, projectors and more, curated from AliExpress at great prices.">
+
+  <!-- Canonical tag — tells search engines this is the official
+       address for this page. See the walkthrough for why this matters. -->
+  <link rel="canonical" href="https://techgadgets9.netlify.app/">
+
+  <!-- Open Graph tags — control how this page looks when shared
+       on Pinterest, Facebook, WhatsApp, etc. See the walkthrough
+       for what each line does. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TechNest">
+  <meta property="og:title" content="TechNest — Best Tech Gadgets & Smart Home Deals">
+  <meta property="og:description" content="Discover handpicked tech gadgets at TechNest — smart home devices, wearables, power banks, projectors and more, curated from AliExpress at great prices.">
+  <meta property="og:url" content="https://techgadgets9.netlify.app/">
+  <meta property="og:image" content="https://techgadgets9.netlify.app/og-image.jpg">
+
   <!-- Links to our CSS stylesheet -->
   <link rel="stylesheet" href="style.css">
   <!-- Favicon — shows the icon in browser tabs -->
@@ -48,7 +63,7 @@
        Edit the text inside <span> to change the message
        ====================================================== -->
   <div class="announce-bar">
-    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; 100% Secure Shopping 🛡️</span>
+    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; Checkout Secured by AliExpress 🔒</span>
   </div>
 
   <!-- ======================================================
@@ -127,6 +142,23 @@
 
     <!-- Subheading description -->
     <p>Carefully curated picks across audio, wearables, cameras and more — all with the best affiliate deals.</p>
+
+    <!-- Hero CTA button — jumps down to the product grid.
+         The smooth scrolling animation is turned on in style.css
+         (html { scroll-behavior: smooth; }), so we don't need any
+         JavaScript for this to work. -->
+    <a href="#product-grid" class="hero-cta-btn">Browse All Deals ↓</a>
+  </section>
+
+  <!-- ======================================================
+       TRUST BAR — Short row of honest trust signals,
+       shown right below the Hero section.
+       ====================================================== -->
+  <section class="trust-bar">
+    <div class="trust-item"><span class="trust-icon">✅</span> Handpicked Products Only</div>
+    <div class="trust-item"><span class="trust-icon">🔒</span> Secure AliExpress Checkout</div>
+    <div class="trust-item"><span class="trust-icon">🚚</span> Tracked Worldwide Shipping</div>
+    <div class="trust-item"><span class="trust-icon">🔄</span> Easy Returns via AliExpress</div>
   </section>
 
   <!-- ======================================================
