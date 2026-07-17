@@ -763,6 +763,15 @@ footer {
   .nav-link   { font-size: 0.78rem; padding: 6px 8px; }
   .footer-nav { flex-wrap: wrap; justify-content: center; gap: 12px; }
   .announce-bar { font-size: 0.72rem; }
+
+  /* Hide the Privacy Policy link from the MOBILE top navigation only.
+     Scoped to ".header-nav" so it does NOT touch the footer's own
+     Privacy Policy link (.footer-nav), which stays visible everywhere.
+     Desktop nav is untouched because this rule only exists inside
+     this max-width: 600px media query. */
+  .header-nav a[href="privacy.html"] {
+    display: none;
+  }
 }
 
 /* ============================================================
@@ -1107,6 +1116,70 @@ footer {
   color: var(--text-muted);
   text-align: center;
   margin-top: -8px;
+}
+
+/* ============================================================
+   STICKY MOBILE BUY NOW BAR — product.html only
+   Hidden everywhere by default. Only turned on inside the
+   max-width: 600px media query below, AND only once JavaScript
+   has put content inside it (":not(:empty)"). This means it can
+   never appear as an empty bar on desktop or on an error page.
+   ============================================================ */
+.sticky-buy-bar {
+  display: none;
+}
+
+/* Leaves room at the very bottom of the page (on mobile only) so
+   the fixed bar never covers the footer's last links or the Buy
+   Now button's own notice text. Scoped with "body.product-page"
+   so it only affects this one page, not the rest of the site. */
+@media (max-width: 600px) {
+  body.product-page {
+    padding-bottom: 84px;
+  }
+
+  .sticky-buy-bar:not(:empty) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  .sticky-buy-price {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .sticky-buy-btn {
+    flex: 1;
+    max-width: 220px;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0d0d0f;
+    background: var(--accent);
+    border-radius: 10px;
+    padding: 12px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .sticky-buy-btn:active {
+    background: var(--accent-dark);
+  }
 }
 
 /* Error/loading states on product page */
