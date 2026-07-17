@@ -39,6 +39,12 @@
   padding: 0;
 }
 
+/* Makes clicking an anchor link (like our Hero CTA button)
+   scroll down smoothly instead of jumping instantly. */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Body = the whole page background and font */
 body {
   background-color: var(--bg);
@@ -142,6 +148,67 @@ header {
   margin: 0 auto;
   line-height: 1.7;
 }
+
+/* --- HERO CTA BUTTON ---
+   Styled the same way as the "Buy Now" button on the product
+   details page (.detail-buy-btn), so it feels like it belongs
+   to the same site instead of looking like a new design.
+*/
+.hero-cta-btn {
+  display: inline-block;
+  margin-top: 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0d0d0f;
+  background: var(--accent);
+  border-radius: 12px;
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 20px rgba(110, 231, 183, 0.25);
+}
+
+.hero-cta-btn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+}
+
+/* --- TRUST BAR ---
+   A short row of honest trust signals shown below the Hero.
+   Wraps onto multiple lines automatically on small screens.
+*/
+.trust-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  max-width: 900px;
+  margin: 0 auto 8px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.trust-icon {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .trust-bar {
+    gap: 16px 22px;
+    padding: 16px 20px;
+  }
+}
 /* ============================================================
    MAIN CONTENT WRAPPER — Centers everything on large screens
    ============================================================ */
@@ -183,6 +250,9 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
   margin-bottom: 48px;
+  /* Leaves space so the sticky header doesn't cover the top of
+     the grid when the Hero CTA button scrolls down to it. */
+  scroll-margin-top: 90px;
 }
 
 /* ============================================================
