@@ -465,7 +465,7 @@ function createCard(product, index) {
           <span class="card-price">${product.price}</span>
           ${origPriceHTML}
         </div>
-        <a href="${detailURL}" class="read-more-btn">See Details →</a>
+        <a href="${detailURL}" class="read-more-btn">See Deal →</a>
       </div>
     </div>
   `;
