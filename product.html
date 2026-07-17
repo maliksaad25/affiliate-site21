@@ -47,7 +47,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
-<body>
+<body class="product-page">
 
   <!-- Announcement Bar -->
   <div class="announce-bar">
@@ -120,6 +120,13 @@
       <p class="footer-copy">© 2025 TechNest. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Sticky Buy Now bar — MOBILE ONLY.
+       Starts empty on purpose. JavaScript below fills it in once the
+       product has loaded, and it only becomes visible on small screens
+       (see the ":not(:empty)" rule in style.css) — so it never shows
+       on desktop, and never shows blank if a product fails to load. -->
+  <div id="sticky-buy-bar" class="sticky-buy-bar"></div>
 
   <!-- script.js wires up the header Search box (this page has no
        product grid, so script.js only handles the search redirect). -->
@@ -282,6 +289,21 @@
       html += '</div>'; /* close product-detail-grid */
 
       detailDiv.innerHTML = html;
+
+      /* STEP 9: Fill in the sticky mobile Buy Now bar.
+         This uses the exact same price and affiliate_link as the
+         main Buy Now button above — it's just a second copy that
+         stays visible at the bottom of the screen on mobile.
+         It stays hidden on desktop and hidden if a product failed
+         to load, because of the CSS rule in style.css. */
+      var stickyBar = document.getElementById('sticky-buy-bar');
+      if (stickyBar) {
+        stickyBar.innerHTML =
+          '<span class="sticky-buy-price">' + product.price + '</span>' +
+          '<a href="' + product.affiliate_link + '" ' +
+          'target="_blank" rel="noopener noreferrer" class="sticky-buy-btn">' +
+          '🛒 Buy Now</a>';
+      }
     }
 
     /* ============================================================
