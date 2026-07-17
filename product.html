@@ -23,6 +23,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Product Details — TechNest Tech Gadgets</title>
 <meta name="description" content="Browse detailed specs, pricing, and deals on this tech gadget from TechNest, curated from AliExpress with fast affiliate checkout.">
+
+  <!-- Canonical tag — starts pointing at the plain product.html URL.
+       The script below updates the href to include "?id=..." as soon
+       as it knows which product is being shown. See the walkthrough
+       for why this page needs JavaScript to do this, unlike the
+       other pages. -->
+  <link rel="canonical" id="canonical-tag" href="https://techgadgets9.netlify.app/product.html">
+
+  <!-- Open Graph tags — default/fallback version for this page.
+       See the walkthrough for an important limitation explained
+       specifically for this file. -->
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="TechNest">
+  <meta property="og:title" content="Product Details — TechNest Tech Gadgets">
+  <meta property="og:description" content="Browse detailed specs, pricing, and deals on this tech gadget from TechNest, curated from AliExpress with fast affiliate checkout.">
+  <meta property="og:url" content="https://techgadgets9.netlify.app/product.html">
+  <meta property="og:image" content="https://techgadgets9.netlify.app/og-image.jpg">
+
   <link rel="stylesheet" href="style.css">
   <!-- Favicon — shows the icon in browser tabs -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -33,7 +51,7 @@
 
   <!-- Announcement Bar -->
   <div class="announce-bar">
-    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; 100% Secure Shopping 🛡️</span>
+    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; Checkout Secured by AliExpress 🔒</span>
   </div>
 
   <!-- Header -->
@@ -171,6 +189,18 @@
 
       /* STEP 4: Update the browser tab title */
       document.title = product.title + ' — TechNest';
+
+      /* STEP 4b: Update the canonical tag to point at THIS specific
+         product (including its ?id=... in the URL). Without this,
+         every product page would claim to be a copy of the same
+         blank "product.html" page, which confuses search engines. */
+      var canonicalTag = document.getElementById('canonical-tag');
+      if (canonicalTag) {
+        canonicalTag.setAttribute(
+          'href',
+          'https://techgadgets9.netlify.app/product.html?id=' + product.id
+        );
+      }
 
       /* STEP 5: Build badge HTML */
       var badgeHTML = '';
