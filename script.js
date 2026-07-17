@@ -562,3 +562,4 @@ async function buildCategoryDropdownOnly() {
     console.error('Could not build Categories dropdown:', error);
   }
 }
+  
