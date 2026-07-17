@@ -763,12 +763,26 @@ footer {
   .nav-link   { font-size: 0.78rem; padding: 6px 8px; }
   .footer-nav { flex-wrap: wrap; justify-content: center; gap: 12px; }
   .announce-bar { font-size: 0.72rem; }
+}
 
-  /* Hide the Privacy Policy link from the MOBILE top navigation only.
-     Scoped to ".header-nav" so it does NOT touch the footer's own
-     Privacy Policy link (.footer-nav), which stays visible everywhere.
-     Desktop nav is untouched because this rule only exists inside
-     this max-width: 600px media query. */
+/* Hide the Privacy Policy link from the MOBILE top navigation only.
+   Scoped to ".header-nav" so it does NOT touch the footer's own
+   Privacy Policy link (.footer-nav), which stays visible everywhere,
+   and does not touch desktop since it only exists inside this
+   media query.
+
+   This used to live inside the "max-width: 600px" block above, and
+   the selector itself was already correct (it matches the real
+   markup — a[href="privacy.html"] inside .header-nav — on every
+   page). The reason the link kept showing on real phones is the
+   breakpoint, not the selector: 600px is narrower than a lot of
+   phones report in CSS pixels once you factor in landscape
+   orientation, larger "phablet"-class phones, and OS-level display
+   scaling — plenty of real devices land in the 601–768px range and
+   never matched the old rule. 768px is the standard phone/small-
+   tablet cutoff, so this reliably covers the devices the 600px
+   version was missing. */
+@media (max-width: 768px) {
   .header-nav a[href="privacy.html"] {
     display: none;
   }
@@ -1554,4 +1568,3 @@ footer {
     margin-bottom: 32px;
   }
 }
-  
