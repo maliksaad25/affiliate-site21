@@ -1,7 +1,255 @@
 <!DOCTYPE html>
 <!--
   index.html — The main page of TechNest
+  This file defines the STRUCTURE <!DOCTYPE html>
+<!--
+  index.html — The main page of TechNest
   This file defines the STRUCTURE of the website.
+  The actual products are loaded dynamically from posts.json via script.js.
+  You should NOT need to edit this file to add/remove products.
+-->
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4KRE9E445"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G4KRE9E445');
+</script>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xam6rvcy63");
+</script>
+  <!-- Tells the browser this is UTF-8 encoded (supports all characters) -->
+  <meta charset="UTF-8">
+
+  <!-- Makes the site look good on mobile phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tab title and SEO description -->
+  <title>TechNest — Best Tech Gadgets & Smart Home Deals</title>
+  <meta name="description" content="Discover handpicked tech gadgets at TechNest — smart home devices, wearables, power banks, projectors and more, curated from AliExpress at great prices.">
+
+  <!-- Canonical tag — tells search engines this is the official
+       address for this page. See the walkthrough for why this matters. -->
+  <link rel="canonical" href="https://techgadgets9.netlify.app/">
+
+  <!-- Open Graph tags — control how this page looks when shared
+       on Pinterest, Facebook, WhatsApp, etc. See the walkthrough
+       for what each line does. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TechNest">
+  <meta property="og:title" content="TechNest — Best Tech Gadgets & Smart Home Deals">
+  <meta property="og:description" content="Discover handpicked tech gadgets at TechNest — smart home devices, wearables, power banks, projectors and more, curated from AliExpress at great prices.">
+  <meta property="og:url" content="https://techgadgets9.netlify.app/">
+  <meta property="og:image" content="https://techgadgets9.netlify.app/og-image.jpg">
+
+  <!-- Links to our CSS stylesheet -->
+  <link rel="stylesheet" href="style.css?v=3">
+  <!-- Favicon — shows the icon in browser tabs -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+
+<body>
+
+  <!-- ======================================================
+       ANNOUNCEMENT BAR — Scrolling strip above the header
+       Edit the text inside <span> to change the message
+       ====================================================== -->
+  <div class="announce-bar">
+    <span>🔥 New AliExpress Deals Added Daily &nbsp;·&nbsp; Free Shipping on Most Orders &nbsp;·&nbsp; Checkout Secured by AliExpress 🔒</span>
+  </div>
+
+  <!-- ======================================================
+       HEADER — Sticky top bar with site name
+       ====================================================== -->
+  <header>
+    <div class="header-inner">
+      <!-- Logo: clicking it reloads the page -->
+      <a href="index.html" class="logo">Tech<span>Nest</span></a>
+      <!-- Navigation links — right side of header -->
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+
+        <!-- Categories dropdown — items are filled in automatically by
+             script.js from the same category groups used for filtering.
+             Selecting an item applies that filter and scrolls to the grid. -->
+        <div class="nav-dropdown" id="categories-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="categories-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            Categories <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" id="categories-nav-menu" role="menu">
+            <!-- Category links inserted here automatically by script.js -->
+          </div>
+        </div>
+
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="privacy.html" class="nav-link nav-privacy-link">Privacy</a>
+
+        <!-- Search — same open/close pattern as the Categories dropdown
+             above (button + absolutely-positioned panel), so it matches
+             the existing look and feel. Typing filters products live on
+             the Home page; on other pages, pressing Enter opens the Home
+             page with that search already applied. Wiring lives in
+             script.js (setupSearchDropdown / handleSearch). -->
+        <div class="nav-dropdown nav-search" id="search-nav-dropdown">
+          <button
+            class="nav-link nav-dropdown-toggle"
+            id="search-nav-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-label="Search products">
+            <svg class="nav-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span class="nav-search-label">Search</span>
+          </button>
+          <div class="nav-search-panel" id="search-nav-panel">
+            <input
+              type="search"
+              id="nav-search-input"
+              class="nav-search-input"
+              placeholder="Search products…"
+              aria-label="Search products"
+              autocomplete="off"
+              enterkeyhint="search">
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       HERO — Big intro section with headline
+       ====================================================== -->
+  <section class="hero">
+    <!-- Small badge above the heading -->
+    <div class="hero-label">✦ Handpicked for You</div>
+
+    <!-- Main headline -->
+    <h1>The Best <span class="highlight">Tech Gadgets</span><br>Right Now</h1>
+
+    <!-- Subheading description -->
+    <p>Carefully curated picks across audio, wearables, cameras and more — all with the best affiliate deals.</p>
+
+    <!-- Hero CTA button — jumps down to the product grid.
+         The smooth scrolling animation is turned on in style.css
+         (html { scroll-behavior: smooth; }), so we don't need any
+         JavaScript for this to work. -->
+    <a href="#product-grid" class="hero-cta-btn">Browse All Deals ↓</a>
+  </section>
+
+  <!-- ======================================================
+       TRUST BAR — Short row of honest trust signals,
+       shown right below the Hero section.
+       ====================================================== -->
+  <section class="trust-bar">
+    <div class="trust-item"><span class="trust-icon">✅</span> Handpicked Products Only</div>
+    <div class="trust-item"><span class="trust-icon">🔒</span> Secure AliExpress Checkout</div>
+    <div class="trust-item"><span class="trust-icon">🚚</span> Tracked Worldwide Shipping</div>
+    <div class="trust-item"><span class="trust-icon">🔄</span> Easy Returns via AliExpress</div>
+  </section>
+
+  <!-- ======================================================
+       HERO SEARCH — Large search box + Categories dropdown in
+       one bar, directly below the hero heading/description.
+       Filters the product grid below live — wiring lives in
+       script.js (setupHeroSearch / handleSearch / applyFilter).
+       ====================================================== -->
+  <section class="hero-search">
+    <div class="hero-search-bar">
+      <div class="hero-search-box">
+        <svg class="hero-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input
+          type="search"
+          id="hero-search-input"
+          class="hero-search-input"
+          placeholder="Search products..."
+          aria-label="Search products"
+          autocomplete="off">
+      </div>
+      <div class="hero-search-divider" aria-hidden="true"></div>
+      <div class="hero-category-box">
+        <select id="hero-category-select" class="hero-category-select" aria-label="Filter by category">
+          <option value="All">All Categories</option>
+          <!-- Category options inserted here automatically by script.js -->
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       MAIN CONTENT — Filter controls + product grid
+       ====================================================== -->
+  <main>
+
+   <!-- Controls row: product count (filtering is now handled by the
+         Categories dropdown in the top navigation bar) -->
+    <div class="controls">
+
+      <!-- Product count text (e.g. "9 products found") -->
+      <p class="product-count" id="product-count"></p>
+
+    </div>
+    <!-- Product Grid: cards are inserted here by script.js -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will appear here automatically -->
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-wrapper">
+      <button id="load-more-btn" class="hidden">Load More Products</button>
+    </div>
+
+  </main>
+
+  <!-- ======================================================
+       FOOTER — Bottom of the page
+       ====================================================== -->
+  <footer>
+    <div class="footer-inner">
+      <!-- Footer logo -->
+      <div class="footer-logo">Tech<span>Nest</span></div>
+
+      <!-- Affiliate disclaimer — important for legal compliance -->
+      <p class="footer-text">
+        As an AliExpress affiliate, we may earn a commission from qualifying purchases.
+        This comes at no extra cost to you and helps keep this site running.
+      </p>
+
+      <!-- Footer navigation links -->
+      <div class="footer-nav">
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+
+      <!-- Copyright notice -->
+      <p class="footer-copy">© 2025 TechNest. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Links to our JavaScript file — placed at the END of body -->
+  <!-- Placing it here ensures the HTML is loaded before the script runs -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+of the website.
   The actual products are loaded dynamically from posts.json via script.js.
   You should NOT need to edit this file to add/remove products.
 -->
