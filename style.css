@@ -986,6 +986,17 @@ footer {
     padding: 10px 20px 18px;
   }
 
+  /* Lets the Categories/Search flyout (below) float OVER the rest of
+     the open nav instead of being clipped by this container's own
+     scroll box. The flat link list above always fits comfortably
+     within max-height on any real phone, so nothing is lost here —
+     this just stops that safety-net scroll box from cutting off the
+     floating menu the same way it would clip anything positioned
+     outside its own box. */
+  .header-nav.nav-open {
+    overflow: visible;
+  }
+
   .header-nav .nav-link {
     width: 100%;
     font-size: 0.95rem;
@@ -1012,28 +1023,26 @@ footer {
     display: inline;
   }
 
-  /* Categories / Search flyout panels: anchor to the nav panel's
-     full width instead of the narrow toggle button, so they can
-     never run off the edge of the screen. Since position:static
-     keeps them in the document flow even while "closed" (opacity/
-     visibility alone don't remove layout space), their height is
-     explicitly collapsed here and only expands once the parent
-     ".nav-dropdown" gets its "open" class. */
-  .header-nav .nav-dropdown-menu,
-  .header-nav .nav-search-panel {
-    position: static;
-    width: 100%;
-    margin: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease, visibility 0.3s;
+  /* Categories / Search flyout panels: SAME floating-card behavior
+     as desktop (position:absolute, inherited from the base rule —
+     not overridden here), just stretched to the full width of the
+     now-full-width ".nav-dropdown" instead of desktop's fixed
+     220px/260px. Because the toggle button itself already spans the
+     full nav width on mobile, anchoring left:0/right:0 to it keeps
+     the menu safely on-screen without ever needing to detach it from
+     its toggle the way the old cramped horizontal nav once did. This
+     also means it opens with the exact same fade + slide-down
+     animation as desktop, rather than growing/pushing content down. */
+  .header-nav .nav-dropdown-menu {
+    left: 0;
+    right: 0;
+    width: auto;
   }
 
-  .header-nav .nav-dropdown.open .nav-dropdown-menu,
-  .header-nav .nav-dropdown.open .nav-search-panel {
-    max-height: 60vh;
-    overflow-y: auto;
-    margin: 4px 0 8px;
+  .header-nav .nav-search-panel {
+    left: 0;
+    right: 0;
+    width: auto;
   }
 }
 
@@ -1596,25 +1605,12 @@ footer {
   font-weight: 600;
 }
 
-/* On phones, keep the menu from running off the right edge of the screen */
-@media (max-width: 600px) {
-  /* This is the key fix: on mobile, we remove .nav-dropdown as the
-     "anchor point" for the menu. Without this, the menu positions
-     itself against the small "Categories" button. By turning this
-     off, the menu instead anchors to the header itself (which spans
-     the full screen width), so it can never run off the left edge. */
-  .nav-dropdown {
-    position: static;
-  }
-
-  .nav-dropdown-menu {
-    left: 16px;                        /* 16px gap from the left edge of the screen */
-    right: 16px;                       /* 16px gap from the right edge of the screen */
-    max-height: 65vh;                  /* Limits height to 65% of the screen so it always fits vertically */
-    overflow-y: auto;                  /* Adds a scrollbar inside the menu if the list is taller than max-height */
-    -webkit-overflow-scrolling: touch; /* Makes scrolling smooth and finger-friendly on iPhones */
-  }
-}
+/* Categories dropdown positioning on mobile is now handled entirely
+   by the unified "RESPONSIVE NAVBAR" block above (max-width: 760px),
+   which anchors the menu directly to its now-full-width toggle
+   button — the same floating-card behavior as desktop. (This replaces
+   an older, narrower fix that only worked below 600px and predates
+   the hamburger menu.) */
 
 /* ============================================================
    HEADER SEARCH BOX
@@ -1684,20 +1680,9 @@ footer {
   outline-offset: 1px;
 }
 
-/* On phones, keep the panel from running off the edge of the screen
-   (same fix already used for the Categories menu at this breakpoint) */
-@media (max-width: 600px) {
-  .nav-search-panel {
-    left: 16px;
-    right: 16px;
-    width: auto;
-  }
-
-  /* Keep just the icon on small screens so the nav row stays compact */
-  .nav-search-label {
-    display: none;
-  }
-}
+/* Search panel positioning on mobile is likewise handled entirely by
+   the unified "RESPONSIVE NAVBAR" block above — same floating-card
+   behavior as desktop, anchored to its own full-width toggle. */
 
 /* ============================================================
    HERO SEARCH BAR — Big search input + Categories dropdown,
