@@ -40,6 +40,15 @@
   <meta property="og:description" content="Browse detailed specs, pricing, and deals on this tech gadget from TechNest, curated from AliExpress with fast affiliate checkout.">
   <meta property="og:url" content="https://techgadgets9.netlify.app/product.html">
   <meta property="og:image" content="https://techgadgets9.netlify.app/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Product Details — TechNest Tech Gadgets">
+
+  <!-- Twitter Card — controls how this page looks when shared on X/Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Product Details — TechNest Tech Gadgets">
+  <meta name="twitter:description" content="Browse detailed specs, pricing, and deals on this tech gadget from TechNest, curated from AliExpress with fast affiliate checkout.">
+  <meta name="twitter:image" content="https://techgadgets9.netlify.app/og-image.jpg">
 
   <link rel="stylesheet" href="style.css">
   <!-- Favicon — shows the icon in browser tabs -->
@@ -58,7 +67,26 @@
   <header>
     <div class="header-inner">
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
-      <nav class="header-nav">
+
+      <!-- Hamburger menu toggle — visible on mobile/tablet only.
+           script.js toggles the "nav-open" class on #site-nav and
+           flips aria-expanded; CSS (max-width: 760px) handles the
+           slide-down panel and the icon's bar-to-X animation. -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="site-nav">
+        <span class="nav-toggle-bars" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+
+      <nav class="header-nav" id="site-nav">
         <a href="index.html" class="nav-link">Home</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
@@ -196,6 +224,28 @@
 
       /* STEP 4: Update the browser tab title */
       document.title = product.title + ' — TechNest';
+
+      /* STEP 4a: Update Open Graph / Twitter Card metadata to match
+         THIS specific product, so sharing a product link on Facebook,
+         WhatsApp, X, etc. shows that product's own title/description
+         instead of the generic site-wide fallback every product
+         page starts with. */
+      var shareTitle = product.title + ' — TechNest';
+      var shareDesc  = (product.description || '')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 160);
+
+      setMeta('meta[property="og:title"]', 'content', shareTitle);
+      setMeta('meta[property="og:description"]', 'content', shareDesc);
+      setMeta('meta[name="twitter:title"]', 'content', shareTitle);
+      setMeta('meta[name="twitter:description"]', 'content', shareDesc);
+
+      function setMeta(selector, attr, value) {
+        var tag = document.querySelector(selector);
+        if (tag && value) tag.setAttribute(attr, value);
+      }
 
       /* STEP 4b: Update the canonical tag to point at THIS specific
          product (including its ?id=... in the URL). Without this,
