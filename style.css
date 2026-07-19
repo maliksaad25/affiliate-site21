@@ -167,6 +167,37 @@ header {
   top: 6px;
   transform: rotate(-45deg);
 }
+
+/* --- MOBILE-ONLY HEADER SEARCH BOX ---
+   Sits between the logo and the hamburger toggle. Hidden here by
+   default (desktop/laptop keeps its existing hero search bar and
+   header search dropdown, completely untouched); switched on only
+   inside the max-width: 760px block further down, alongside the
+   rest of the mobile nav layout. */
+.header-search {
+  display: none;
+}
+
+.header-search-icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.header-search-input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.header-search-input::placeholder {
+  color: var(--text-muted);
+}
 /* The logo / site name — matches the Hero heading's typeface,
    weight and tracking so the wordmark and the headline read as
    one consistent type system. */
@@ -949,12 +980,38 @@ footer {
    ============================================================ */
 @media (max-width: 760px) {
   .header-inner {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
+    column-gap: 10px;
     height: 60px;
+  }
+
+  .logo {
+    /* Slightly smaller so it never crowds the search box on narrow phones */
+    font-size: 1.35rem;
   }
 
   .nav-toggle {
     display: flex;
+  }
+
+  /* The mobile-only header search box — sits in the middle grid
+     column between the logo and the hamburger, and grows/shrinks
+     with the available space (1fr) without disturbing either. */
+  .header-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    height: 38px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 12px;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  .header-search:focus-within {
+    border-color: var(--accent);
   }
 
   .header-nav {
@@ -1043,6 +1100,14 @@ footer {
     left: 0;
     right: 0;
     width: auto;
+  }
+
+  /* The hero search bar (search box + "All Categories" dropdown) is
+     hidden on mobile only. Search now lives in the header, and
+     Categories is already in the hamburger nav — both were
+     redundant here. Desktop/laptop is completely untouched. */
+  .hero-search {
+    display: none;
   }
 }
 
