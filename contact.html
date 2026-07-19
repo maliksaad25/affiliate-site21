@@ -36,6 +36,21 @@
     <div class="header-inner">
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
 
+      <!-- Mobile-only search box — hidden on desktop/laptop (see
+           ".header-search" in style.css). Sits between the logo and
+           the hamburger toggle. Wired up in script.js alongside the
+           other two search boxes, so all three always stay in sync. -->
+      <div class="header-search" role="search">
+        <svg class="header-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input
+          type="search"
+          id="header-search-input"
+          class="header-search-input"
+          placeholder="Search..."
+          aria-label="Search products"
+          autocomplete="off">
+      </div>
+
       <!-- Hamburger menu toggle — visible on mobile/tablet only.
            script.js toggles the "nav-open" class on #site-nav and
            flips aria-expanded; CSS (max-width: 760px) handles the
