@@ -139,6 +139,10 @@ function buildCategoryDropdown() {
         dropdown.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
 
+        // Also close the mobile hamburger panel, if open, since
+        // we're about to scroll down to the (now-filtered) grid
+        closeMobileNav();
+
         // Scroll down so the user immediately sees the filtered products
         document.getElementById('product-grid').scrollIntoView({
           behavior: 'smooth',
@@ -523,6 +527,68 @@ function showLoading() {
     </div>`;
   loadMoreBtn.classList.add('hidden');
 }
+
+/* ============================================================
+   RESPONSIVE NAVBAR — Hamburger menu (mobile/tablet)
+   Wires up the hamburger button added next to the logo in every
+   page's header. Runs on every page since the header (and this
+   button) is shared across all of them.
+   ============================================================ */
+function closeMobileNav() {
+  const toggle = document.getElementById('nav-toggle');
+  const nav    = document.getElementById('site-nav');
+  if (!nav || !toggle) return;
+  nav.classList.remove('nav-open');
+  toggle.setAttribute('aria-expanded', 'false');
+}
+
+function setupMobileNav() {
+  const toggle = document.getElementById('nav-toggle');
+  const nav    = document.getElementById('site-nav');
+  if (!toggle || !nav) return; // Safety check
+
+  function openNav() {
+    nav.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = nav.classList.contains('nav-open');
+    if (isOpen) closeMobileNav(); else openNav();
+  });
+
+  // Close the panel after tapping a real navigation link (Home,
+  // About, Contact, Privacy) — but not the Categories/Search
+  // toggle buttons, which need the panel to stay open underneath them.
+  nav.querySelectorAll('a.nav-link').forEach(link => {
+    link.addEventListener('click', closeMobileNav);
+  });
+
+  // Close on outside click/tap
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+      closeMobileNav();
+    }
+  });
+
+  // Close on Escape, and return focus to the toggle button
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      closeMobileNav();
+      toggle.focus();
+    }
+  });
+
+  // If the window is resized past the mobile breakpoint (e.g. rotating
+  // a tablet, or resizing a desktop browser window) while the panel is
+  // open, reset it so it doesn't stay stuck open at desktop widths.
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 760) closeMobileNav();
+  });
+}
+
+setupMobileNav();
 
 /* ============================================================
    START EVERYTHING
