@@ -47,6 +47,15 @@
   <meta property="og:description" content="Discover handpicked tech gadgets at TechNest — smart home devices, wearables, power banks, projectors and more, curated from AliExpress at great prices.">
   <meta property="og:url" content="https://techgadgets9.netlify.app/">
   <meta property="og:image" content="https://techgadgets9.netlify.app/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TechNest — Best Tech Gadgets & Smart Home Deals">
+
+  <!-- Twitter Card — controls how this page looks when shared on X/Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TechNest — Best Tech Gadgets & Smart Home Deals">
+  <meta name="twitter:description" content="Discover handpicked tech gadgets at TechNest — smart home devices, wearables, power banks, projectors and more, curated from AliExpress at great prices.">
+  <meta name="twitter:image" content="https://techgadgets9.netlify.app/og-image.jpg">
 
   <!-- Links to our CSS stylesheet -->
   <link rel="stylesheet" href="style.css">
@@ -73,9 +82,28 @@
     <div class="header-inner">
       <!-- Logo: clicking it reloads the page -->
       <a href="index.html" class="logo">Tech<span>Nest</span></a>
-      <!-- Navigation links — right side of header -->
-      <nav class="header-nav">
-        <a href="index.html" class="nav-link active">Home</a>
+
+      <!-- Hamburger menu toggle — visible on mobile/tablet only.
+           script.js toggles the "nav-open" class on #site-nav and
+           flips aria-expanded; CSS (max-width: 760px) handles the
+           slide-down panel and the icon's bar-to-X animation. -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="site-nav">
+        <span class="nav-toggle-bars" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+
+      <!-- Navigation links -->
+      <nav class="header-nav" id="site-nav">
+        <a href="index.html" class="nav-link active" aria-current="page">Home</a>
 
         <!-- Categories dropdown — items are filled in automatically by
              script.js from the same category groups used for filtering.
