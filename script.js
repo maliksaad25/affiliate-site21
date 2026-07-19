@@ -69,15 +69,17 @@ async function loadProducts() {
 
     // Likewise, if the user searched from the header on another page,
     // the URL will look like index.html?search=headphones — restore that
-    // search term into both search boxes and apply it.
+    // search term into all three search boxes and apply it.
     const urlSearch = params.get('search');
     if (urlSearch) {
       searchDisplay = urlSearch;
       searchTerm = urlSearch.trim().toLowerCase();
-      const navInput  = document.getElementById('nav-search-input');
-      const heroInput = document.getElementById('hero-search-input');
-      if (navInput)  navInput.value  = urlSearch;
-      if (heroInput) heroInput.value = urlSearch;
+      const navInput    = document.getElementById('nav-search-input');
+      const heroInput   = document.getElementById('hero-search-input');
+      const headerInput = document.getElementById('header-search-input');
+      if (navInput)    navInput.value    = urlSearch;
+      if (heroInput)   heroInput.value   = urlSearch;
+      if (headerInput) headerInput.value = urlSearch;
     }
 
     applyFilter(categoryExists ? urlCategory : 'All');
@@ -241,20 +243,22 @@ function buildSearchIndex() {
 
 /* ============================================================
    HANDLE SEARCH INPUT
-   Called every time the user types in EITHER search box — the
-   header one or the new hero one (only relevant on pages that
-   have the product grid). Keeps both boxes showing the same text.
+   Called every time the user types in ANY of the three search boxes
+   — the header dropdown, the hero bar (desktop), or the mobile
+   header search box. Keeps all three showing the same text.
    ============================================================ */
 function handleSearch(value) {
   searchDisplay = value;
   searchTerm    = value.trim().toLowerCase();
   currentPage   = 1;
 
-  // Keep both search boxes (header dropdown + hero bar) in sync
-  const navInput  = document.getElementById('nav-search-input');
-  const heroInput = document.getElementById('hero-search-input');
-  if (navInput  && navInput.value  !== value) navInput.value  = value;
-  if (heroInput && heroInput.value !== value) heroInput.value = value;
+  // Keep all search boxes in sync (header dropdown, hero bar, mobile header)
+  const navInput    = document.getElementById('nav-search-input');
+  const heroInput   = document.getElementById('hero-search-input');
+  const headerInput = document.getElementById('header-search-input');
+  if (navInput    && navInput.value    !== value) navInput.value    = value;
+  if (heroInput   && heroInput.value   !== value) heroInput.value   = value;
+  if (headerInput && headerInput.value !== value) headerInput.value = value;
 
   filtered      = computeFiltered();
   renderProducts(true);
@@ -313,6 +317,35 @@ function setupSearchDropdown() {
 
   // Pressing Enter on a page with no product grid (About/Contact/Privacy/
   // product page) jumps to the Home page with the search already applied.
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (grid) return; // Already filtering live on this page — nothing more to do
+    const value = input.value.trim();
+    if (value) {
+      window.location.href = `index.html?search=${encodeURIComponent(value)}`;
+    }
+  });
+}
+
+/* ============================================================
+   MOBILE HEADER SEARCH BOX
+   Wires up the always-visible search box in the mobile header
+   (between the logo and the hamburger toggle). Appears on every
+   page, same as the header dropdown's search box, so it needs the
+   same two behaviors: live search on the Home page, and "Enter"
+   jumps to the Home page with the search applied everywhere else.
+   ============================================================ */
+function setupHeaderSearch() {
+  const input = document.getElementById('header-search-input');
+  if (!input) return; // Safety check
+
+  let debounceTimer;
+  input.addEventListener('input', () => {
+    if (!grid) return; // No product grid on this page — nothing to filter live
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => handleSearch(input.value), 120);
+  });
+
   input.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter') return;
     if (grid) return; // Already filtering live on this page — nothing more to do
@@ -605,6 +638,10 @@ setupMobileNav();
 // including ones with no product grid (About/Contact/Privacy/product page),
 // where it just jumps to the Home page with the search applied.
 setupSearchDropdown();
+
+// The mobile-only header search box — same "every page" behavior as
+// the dropdown one above, just always visible instead of behind a toggle.
+setupHeaderSearch();
 
 // The hero search bar only exists on the Home page (elements are null
 // everywhere else, and setupHeroSearch() safely no-ops in that case).
