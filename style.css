@@ -1060,6 +1060,16 @@ footer {
     padding: 13px 10px;
   }
 
+  /* Hide the Privacy Policy link from the MOBILE nav panel only.
+     Scoped to ".header-nav" so it does NOT touch the footer's own
+     Privacy Policy link (.footer-nav), which stays visible everywhere.
+     This lives inside the 760px mobile-nav media query — the same
+     one that controls the hamburger panel itself — so it only ever
+     applies when the mobile nav is in play, never on desktop. */
+  .header-nav a[href="privacy.html"] {
+    display: none;
+  }
+
   .header-nav .nav-dropdown {
     width: 100%;
   }
@@ -1887,4 +1897,4 @@ footer {
     padding: 0 20px;
     margin-bottom: 32px;
   }
-}
+}  
